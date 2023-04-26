@@ -6,7 +6,7 @@ import {
   RouterHandler,
   createCheerioRouter,
 } from 'crawlee';
-import { captureError, createApifyActor } from 'apify-actor-utils';
+import { captureError, createApifyActor, logLevelHandlerWrapper } from 'apify-actor-utils';
 import { omitBy } from 'lodash';
 import * as Sentry from '@sentry/node';
 
@@ -16,7 +16,6 @@ import { setupSentry } from './lib/sentry';
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
 import { pickCrawlerInputFields, validateInput } from './validation';
-import { logLevelHandlerWrapper } from './lib/log';
 
 /**
  * # SKCRIS Basic Info

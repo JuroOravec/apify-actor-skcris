@@ -1,11 +1,11 @@
 import type { OptionsInit } from 'got-scraping';
 import type { Log } from 'apify';
-
 import {
   ListingPageFilter,
   ListingPageScraperContext,
   scrapeListingEntries,
-} from '../lib/scrapeListing';
+} from 'apify-actor-utils';
+
 import type { MaybePromise } from '../utils/types';
 import type { ResourceType } from '../types';
 import {

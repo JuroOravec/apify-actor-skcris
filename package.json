@@ -64,7 +64,7 @@
   "dependencies": {
     "@sentry/node": "^7.48.0",
     "apify": "^3.1.4",
-    "apify-actor-utils": "^0.1.5",
+    "apify-actor-utils": "^0.2.1",
     "apify-client": "^2.7.1",
     "cheerio": "^1.0.0-rc.12",
     "commander": "^10.0.0",
