@@ -1,0 +1,12 @@
+{
+    "actorSpecification": 1,
+    "name": "skcris-scraper",
+    "title": "SKCRIS Scraper",
+    "description": "Extract Slovak research organisations, projects, employees, equipment, services, or outputs, and more.",
+    "version": "0.1",
+    "dockerfile": "./Dockerfile",
+    "meta": {
+        "templateId": "ts-crawlee-playwright-chrome"
+    },
+    "input": "./input_schema.json"
+}
