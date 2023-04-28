@@ -116,11 +116,11 @@ const createCrawler = async ({ router, input, crawlerConfig }: {
   return new CheerioCrawler({
     // ----- 1. DEFAULTS -----
     maxRequestsPerMinute: 120,
-    // NOTE: 12-hour timeout. We need high timeout for the linked resources.
+    // NOTE: 4-hour timeout. We need high timeout for the linked resources.
     // Some organisations can have up to 40k outputs. In best case scenario,
     // this can take about 30 mins. From my experience, some entries may be
     // can take 30-60 mins.
-    requestHandlerTimeoutSecs: 60 * 60 * 12, 
+    requestHandlerTimeoutSecs: 60 * 60 * 4,
     // headless: true,
     // maxRequestsPerCrawl: 20,
     
