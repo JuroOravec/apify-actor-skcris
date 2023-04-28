@@ -1,15 +1,16 @@
 import { ApifyClient } from 'apify-client';
 import dotenv from 'dotenv';
 import { program } from 'commander';
+import pkginfo from 'pkginfo';
+
+pkginfo(module, 'name', 'version'); // See https://www.npmjs.com/package/pkginfo
 
 import { findMigrationFileByVersion } from './utils/fs';
 
-const pjson = require('../../package.json');
-
 program //
-  .name(pjson.name)
+  .name(module.exports.name)
   .description('CLI to run and undo Apify actor migrations')
-  .version(pjson.version);
+  .version(module.exports.version);
 
 program
   .command('migrate')
