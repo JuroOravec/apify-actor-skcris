@@ -172,6 +172,10 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
 
 // Customize the default options
 crawlerInput.requestHandlerTimeoutSecs.prefill = 60 * 60 * 4;
+crawlerInput.maxRequestRetries.default = 10;
+crawlerInput.maxRequestRetries.prefill = 10;
+crawlerInput.maxConcurrency.default = 5;
+crawlerInput.maxConcurrency.prefill = 5;
 
 const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorInput, Field>>>({
   schemaVersion: 1,
