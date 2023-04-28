@@ -268,9 +268,11 @@
       }
     }
   },
-  "output": {
-    "schemaVersion": 1,
-    "fields": {},
-    "views": {}
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "fields": {},
+      "views": {}
+    }
   }
 }

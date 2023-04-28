@@ -187,7 +187,7 @@ const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorIn
 });
 
 const outputSchema = createActorOutputSchema({
-  schemaVersion: 1,
+  actorSpecification: 1,
   fields: {},
   views: {},
 });
@@ -201,7 +201,9 @@ const config = createActorConfig({
   version: '0.1',
   dockerfile: './Dockerfile',
   input: inputSchema,
-  output: outputSchema,
+  storages: {
+    dataset: outputSchema,
+  },
 });
 
 export default config;
