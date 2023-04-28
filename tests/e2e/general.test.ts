@@ -3,7 +3,8 @@ import Joi from 'joi';
 import { runActorTest } from 'apify-actor-utils';
 
 import { datasetTypeToUrl } from '../../src/constants';
-import type { DatasetType, SkCrisActorInput } from '../../src/types';
+import type { DatasetType } from '../../src/types';
+import type { ActorInput } from '../../src/config';
 import { run } from '../../src/actor';
 import {
   simpleSkCrisOrgItemValidation,
@@ -53,7 +54,7 @@ describe(
         let calls = 0;
         const queueLengths = batchQueueLengths.slice();
 
-        return runActorTest<any, SkCrisActorInput>({
+        return runActorTest<any, ActorInput>({
           vi,
           input: {
             datasetType: datasetType as DatasetType,

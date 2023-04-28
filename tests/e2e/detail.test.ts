@@ -16,8 +16,8 @@ import type {
   DetailedSkCrisPrjItemLinkedResources,
   DetailedSkCrisResItemLinkedResources,
   ResourceType,
-  SkCrisActorInput,
 } from '../../src/types';
+import type { ActorInput } from '../../src/config';
 
 const log = (...args) => console.log(...args);
 const runActor = () => run({ useSessionPool: false, maxRequestRetries: 0 });
@@ -95,7 +95,7 @@ describe(
       it(`extracts simple entries from ${type} page`, () => {
         expect.assertions(1);
 
-        return runActorTest<any, SkCrisActorInput>({
+        return runActorTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],
@@ -117,7 +117,7 @@ describe(
       it(`extracts detailed entries from ${type} page`, () => {
         expect.assertions(2);
 
-        return runActorTest<any, SkCrisActorInput>({
+        return runActorTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],

@@ -10,7 +10,8 @@ import { captureError, createApifyActor, logLevelHandlerWrapper } from 'apify-ac
 import { omitBy } from 'lodash';
 import * as Sentry from '@sentry/node';
 
-import type { SkCrisActorInput, RouteLabel } from './types';
+import type { ActorInput } from './config';
+import type { RouteLabel } from './types';
 import { stats } from './lib/stats';
 import { setupSentry } from './lib/sentry';
 import { createHandlers, routes } from './router';
@@ -81,7 +82,7 @@ export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> 
   // - https://docs.apify.com/sdk/js/docs/upgrading/upgrading-to-v3#apify-sdk
   await Actor.main(
     async () => {
-      const actor = await createApifyActor<CheerioCrawlingContext, RouteLabel, SkCrisActorInput>({
+      const actor = await createApifyActor<CheerioCrawlingContext, RouteLabel, ActorInput>({
         validateInput,
         router: createCheerioRouter(),
         routes,
@@ -104,7 +105,7 @@ export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> 
 
 // prettier-ignore
 const createCrawler = async ({ router, input, crawlerConfig }: {
-  input: SkCrisActorInput | null;
+  input: ActorInput | null;
   router: RouterHandler<CheerioCrawlingContext>;
   crawlerConfig?: CheerioCrawlerOptions;
 }) => {

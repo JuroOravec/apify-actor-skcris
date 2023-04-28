@@ -9,7 +9,7 @@ import {
 } from '../utils/assert';
 import { run } from '../../src/actor';
 import { datasetTypeToUrl } from '../../src/constants';
-import { SkCrisActorInput } from '../../src/types';
+import type { ActorInput } from '../../src/config';
 
 const log = (...args) => console.log(...args);
 const runActor = () => run({ useSessionPool: false, maxRequestRetries: 0 });
@@ -24,7 +24,7 @@ const testCases: {
   { name: 'prj', url: datasetTypeToUrl.projects, schema: simpleSkCrisPrjItemValidation },
 ];
 
-const filterTestCases: SkCrisActorInput[] = [
+const filterTestCases: ActorInput[] = [
   { listingFilterRegion: 'nitra' },
   { listingFilterFirstLetter: 'c' },
   { listingFilterRegion: 'nitra', listingFilterFirstLetter: 'c' },
@@ -47,7 +47,7 @@ describe(
         const queueLengths = batchQueueLengths.slice();
         let pushedDataCount = 0;
 
-        await runActorTest<any, SkCrisActorInput>({
+        await runActorTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],
@@ -81,7 +81,7 @@ describe(
       expect.assertions(numOfAssertCalls);
       const queueLengths = batchQueueLengths.slice();
 
-      return runActorTest<any, SkCrisActorInput>({
+      return runActorTest<any, ActorInput>({
         vi,
         input: {
           startUrls: [datasetTypeToUrl.organisations],
@@ -111,7 +111,7 @@ describe(
         const queueLengths = batchQueueLengths.slice();
         let pushedDataCount = 0;
 
-        await runActorTest<any, SkCrisActorInput>({
+        await runActorTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [datasetTypeToUrl.projects],
@@ -148,7 +148,7 @@ describe(
       const queueLengths = batchQueueLengths.slice();
       let pushedDataCount = 0;
 
-      await runActorTest<any, SkCrisActorInput>({
+      await runActorTest<any, ActorInput>({
         vi,
         input: {
           startUrls: [datasetTypeToUrl.projects],
@@ -185,7 +185,7 @@ describe(
       const queueLengths = batchQueueLengths.slice();
       let pushedDataCount = 0;
 
-      await runActorTest<any, SkCrisActorInput>({
+      await runActorTest<any, ActorInput>({
         vi,
         input: {
           startUrls: [datasetTypeToUrl.projects],

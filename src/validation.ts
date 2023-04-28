@@ -1,9 +1,12 @@
 import Joi from 'joi';
 import { pick } from 'lodash';
+import { LOG_LEVEL } from 'apify-actor-utils';
 
-import { DATASET_TYPE, DefaultActorInput, REGION_TYPE, SkCrisActorInput } from './types';
+import { DATASET_TYPE, REGION_TYPE } from './types';
+import type { ActorInput, CustomActorInput } from './config';
 import { alphabet, datasetTypeToUrl } from './constants';
-import { LOG_LEVEL } from './lib/log';
+
+type DefaultActorInput = Omit<ActorInput, keyof CustomActorInput>;
 
 const defaultInputValidationFields: Record<keyof DefaultActorInput, Joi.Schema> = {
   proxy: Joi.object().optional(), // NOTE: Expand this type?
@@ -23,7 +26,7 @@ const defaultInputValidationFields: Record<keyof DefaultActorInput, Joi.Schema> 
   keepAlive: Joi.boolean().optional(),
 };
 
-const inputValidationSchema = Joi.object<SkCrisActorInput>({
+const inputValidationSchema = Joi.object<ActorInput>({
   ...defaultInputValidationFields,
   datasetType: Joi.string().valid(...DATASET_TYPE).optional(), // prettier-ignore
   startUrls: Joi.array().optional(),
@@ -35,7 +38,7 @@ const inputValidationSchema = Joi.object<SkCrisActorInput>({
   listingCountOnly: Joi.boolean().optional(),
 });
 
-export const validateInput = (input: SkCrisActorInput | null) => {
+export const validateInput = (input: ActorInput | null) => {
   Joi.assert(input, inputValidationSchema);
 
   if (!input?.startUrls && !input?.datasetType) {

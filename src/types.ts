@@ -1,9 +1,6 @@
-import type { ProxyConfigurationOptions } from 'apify';
-import type { CheerioCrawlerOptions } from 'crawlee';
 import { fromPairs } from 'lodash';
 
 import type { ArrVal } from './utils/types';
-import type { LogLevel } from './lib/log';
 
 const enumFromArray = <T extends readonly any[]>(arr: T) => {
   return fromPairs(arr.map((k) => [k, k])) as { [Key in ArrVal<T>]: Key };
@@ -31,68 +28,6 @@ export type DatasetType = ArrVal<typeof DATASET_TYPE>;
 
 export const REGION_TYPE = ['bratislava', 'trnava', 'trencin', 'nitra', 'zilina', 'banskabystrica', 'presov', 'kosice', 'zahranicie'] as const; // prettier-ignore
 export type RegionType = ArrVal<typeof REGION_TYPE>;
-
-/** Crawler config fields that can be overriden from the actor input */
-type OverridableCrawlerConfigActorInput = Pick<
-  CheerioCrawlerOptions,
-  | 'navigationTimeoutSecs'
-  | 'ignoreSslErrors'
-  | 'additionalMimeTypes'
-  | 'suggestResponseEncoding'
-  | 'forceResponseEncoding'
-  | 'requestHandlerTimeoutSecs'
-  | 'maxRequestRetries'
-  | 'maxRequestsPerCrawl'
-  | 'maxRequestsPerMinute'
-  | 'minConcurrency'
-  | 'maxConcurrency'
-  | 'keepAlive'
->;
-
-export interface DefaultActorInput extends OverridableCrawlerConfigActorInput {
-  proxy?: ProxyConfigurationOptions;
-  logLevel?: LogLevel;
-}
-
-/** Shape of the data passed to the actor from Apify */
-export interface SkCrisActorInput extends DefaultActorInput {
-  /** Choose what kind of data you want to extract - Organisations, researchers, projects, ... */
-  datasetType?: DatasetType;
-  /** URLs to start with */
-  startUrls?: string[];
-  /**
-   * If checked, then, when scraping entry details, the scraper will also fetch all relationships to linked resources (eg org's researchers, org's projects, ...).
-   *
-   * If un-checked, only the data from the entry HTML is extracted.
-   *
-   * Note 1: This is different type of data than what is scraped from individual entries, as this data describes the relationships.
-   *
-   * Note 2: This dramatically increases the running time (full dataset takes days, up to a week).
-   * Consider that the whole DB has more than 500,000 entries of all kinds.
-   * No matter which dataset you obtain, the entries WILL have relationships to all the other entries.
-   *
-   * For details, please refer to http://apify.com/store/jurooravec/profesia-sk-scraper#output */
-  entryIncludeLinkedResources?: boolean;
-  /**
-   * If set, only entries starting with this letter will be extracted.
-   *
-   * NOTE: Only characters A-Z are supported. Letters with diacritics (eg Á),
-   * can be found under the base character (eg A).
-   */
-  listingFilterFirstLetter?: string;
-  /** If set, only entries within this region will be extracted */
-  listingFilterRegion?: RegionType;
-  /** If set, only up to this number of entries will be extracted */
-  listingFilterMaxCount?: number;
-  /**
-   * If set, this number of entries will be extracted per page.
-   *
-   * NOTE: Default is set to 500. This balances 1) slow server start-up time, 2) total server response time, 3) the risk of the request failure.
-   */
-  listingItemsPerPage?: number;
-  /** If checked, no data is extracted. Instead, the count of matched entries is printed in the log. */
-  listingCountOnly?: boolean;
-}
 
 interface BaseSkCrisItem {
   /** Eg `"cfOrg_7343"` */

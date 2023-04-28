@@ -9,18 +9,12 @@ import {
 import type { Response as GotResponse } from 'got-scraping';
 import type { IncomingMessage } from 'http';
 
-import {
-  SkCrisActorInput,
-  RouteLabel,
-  ResourceType,
-  ORG_RESOURCE,
-  RES_RESOURCE,
-  PRJ_RESOURCE,
-} from './types';
+import { RouteLabel, ResourceType, ORG_RESOURCE, RES_RESOURCE, PRJ_RESOURCE } from './types';
 import { SkCrisListingPageContext, listingPageActions } from './pageActions/listing';
 import { CookieRef, createCookie } from './api/skcris';
 import { SkCrisDetailPageContext, detailDOMActions, detailPageActions } from './pageActions/detail';
 import { regionFilterNames } from './constants';
+import type { ActorInput } from './config';
 
 interface RouteData {
   listingLabel: RouteLabel;
@@ -111,7 +105,7 @@ export const routes = Object.values(routeDataByType)
   )
   .flat(1);
 
-export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: SkCrisActorInput) =>
+export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorInput) =>
   Object.entries(routeDataByType).reduce<Record<RouteLabel, RouteHandler<Ctx>>>(
     (
       handlers,
