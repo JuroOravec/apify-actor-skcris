@@ -170,6 +170,9 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
   }),
 };
 
+// Customize the default options
+crawlerInput.requestHandlerTimeoutSecs.prefill = 60 * 60 * 4;
+
 const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorInput, Field>>>({
   schemaVersion: 1,
   title: 'SKCRIS Scraper',
