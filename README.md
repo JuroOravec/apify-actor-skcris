@@ -1,34 +1,48 @@
-Profesia.sk Scraper
+# SKCRIS Scraper
+
 ===============================
 
-One-stop-shop for all data on Profesia.sk. Extract job offers, list of companies, professions, locations... Job offers include salary, textual info, company, and more.
+Extract Slovak research organisations, projects, employees, and data on their equipment, services, or outputs, and more.
 
-## What is Profesia.sk Scraper and how does it work?
+## What is SKCRIS Scraper and how does it work?
 
-With Profesia.sk Scraper, you can extract:
-- [Job offers](https://profesia.sk/praca)
-- [List of companies that have job offers](https://www.profesia.sk/praca/zoznam-spolocnosti)
-- [List of industries that have job offers](https://www.profesia.sk/praca/zoznam-pracovnych-oblasti)
-- [List of locations that have job offers](https://www.profesia.sk/praca/zoznam-lokalit)
-- [List of professions](https://www.profesia.sk/praca/zoznam-pozicii)
-- [List of advertised language requirements](https://www.profesia.sk/praca/zoznam-pozicii)
-- [List of partners of profesia.sk](https://profesia.sk/partneri)
+[SK CRIS](https://www.skcris.sk/portal/) - Slovak Current research information system
+([What is CRIS?](https://en.wikipedia.org/wiki/Current_research_information_system)) - Is the authorative database
+on research in Slovakia. The database contains contant info, outputs, services,
+and project participation of organisations and researchers registered in Slovakia.
+If an organisation or a researcher received public funding for their research, you can
+find them here.
+
+With SKCRIS Scraper, you can extract:
+
+- [All organisations in SKCRIS](https://www.skcris.sk/portal/web/guest/register-organizations)
+- [All researchers in SKCRIS](https://www.skcris.sk/portal/web/guest/register-researchers)
+- [All projects in SKCRIS](https://www.skcris.sk/portal/web/guest/register-projects)
+
+For each of the above, you can:
+
+- Filter down by geographic region (kraj), or by starting letter
+- Select whether to include all related resources (e.g. org's employees, projects, equipement, ...)
 
 See [outputs section](#outputs) for detailed decription.
 
 The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 
 ## Features
-- **7 kinds of datasets**
-  - Scrape details of job offers (or other datasets) or 6 other kinds of datasets.
+
+- **3 kinds of datasets**
+  - Scrape details of organisations, researchers, or projects.
 - **Fast vs Detailed modes**
-  - Job offer scraping can be either quick & simple (data taken from listing page only) or detailed (visit each job offer page)
-- **Full filter support**
-  - Filter the results by search terms, minimum salary, employment type, remote work status, or age of the job offer.
-  - Custom filters can be set up by providing URL to the job listing page with the filters applied.
-  - Limit the number of results
+  - Scraping can be either quick & simple (only data on the entries themselves) or detailed (includes all relationships).
+- **Filter support**
+  - Filter the results by location or starting letter.
+  - Limit the number of results.
 - **Blazing fast**
   - The actor doesn't use browser to extract the data, which means it's fast and cheap.
+  - High throughput - browser paginates at 10 entries per page. This scraper goes at 500 entries per page
+    (~ 13x speed performance improvement).
+- **Proxy support**
+  - You can use Apify's proxy, or your own, via Input.
 - **Custom crawler configuration**
   - For advanced needs, you can pass Crawler configuration via Input.
 - **Tested daily for highly reliability**
@@ -36,30 +50,36 @@ The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 - **Error handling**
   - Errors are captured and surfaced in the `REPORTING` dataset. (See Storage > Dataset > Select dropdown)
 
-## How can you use the data scraped from Profesia.sk? (Examples)
+## How can you use the data scraped from SKCRIS? (Examples)
 
-Companies
-  - Analyse competitors' job offers and recruitment strategies.
-  - Create competitive salary packages + perks based on the information like salary or remote options.
-  - Analyze the effectiveness of job advertisements and optimize their recruitment marketing strategies.
+Lead gen:
 
-Recruiters
-  - Automate the process of finding job offers for your clients.
+- Find potential partners or clients for your service or product.
 
-Analysists
-  - Analyze job market trends like salary expectations, popular job types, and in-demand skills.
-  - Study the regional job market trends.
+Research:
 
-## How to use Profesia.sk Scraper
+- Find organisations and researchers related to your research topic of interest.
+- Find organisations with equipment you need.
+- Find mentors, or potential employers or employees
+
+Analysis:
+
+- Find the most active researchers by field, region, or overall.
+- Understand research and funding trends over time.
+
+## How to use SKCRIS Scraper
+
 1. Create a free Apify account using your email
-2. Open Profesia.sk Scraper
-3. In Input, select the dataset to scrape, filters to apply.
+2. Open SKCRIS Scraper
+3. In Input, select the dataset to scrape, and filters to apply.
 4. Click "Start" and wait for the data to be extracted.
 5. Download your data in JSON, JSONL, XML, CSV, Excel, or HTML format.
 
 For details and examples for all input fields, please visit the [Input tab](https://apify.com/jurooravec/apify-store-scraper/input-schema).
 
-## How much does it cost to scrape Profesia.sk?
+// TODO
+
+## How much does it cost to scrape SKCRIS?
 
 ### Job offers
 
@@ -91,10 +111,6 @@ For details and examples for all input fields, please visit the [Input tab](http
 Checking for new job offers every day => costs less than $1 per month ($0.713 = 31 * $0.023).
 
 Remember that with the [Apify Free plan](https://apify.com/pricing) you have $5 free usage per month.
-
-### Other datasets
-
-List of companies, professions, locations, industries, partners, etc, are all around $0.038 (24s) per run.
 
 ## Input options
 
