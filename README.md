@@ -102,6 +102,7 @@ For details and examples for all input fields, please visit the [Input tab](http
     </tr>
   </tbody>
 </table>
+<br/>
 
 ### Projects
 
@@ -126,6 +127,7 @@ For details and examples for all input fields, please visit the [Input tab](http
     </tr>
   </tbody>
 </table>
+<br/>
 
 ### Researchers
 
@@ -152,10 +154,11 @@ For details and examples for all input fields, please visit the [Input tab](http
 </table>
 
 <br/>
-<br/>
 
-- Fast run of whole database - $8.14 over 10-20h
-- Detailed run of whole database - $35.51 over 42-90h
+### Whole database
+
+- Fast run - $8.14 over 10-20h
+- Detailed run - $35.51 over 42-90h
 
 Remember that with the [Apify Free plan](https://apify.com/pricing) you have $5 free usage per month.
 
@@ -177,64 +180,63 @@ Speed of scraping depends on:
 
 Recommended settings:
 
-- maxConcurrency - 8 if there's little load on the server, otherwise 3
-- Memory (RAM) - 512 MB (there's no point in going higher)
-- Timeout - No timeout
-
-// TODO
+- **maxConcurrency** - Up to 8. However, if you keep getting timeour errors, the server might be under heavier load, in which case set maxConcurrency to 3.
+- **Memory (RAM)** - 512 MB (there's no point in going higher), or 256 MB if maxConcurrency is set to 3.
+- **Timeout** - No timeout.
 
 ## Input options
 
-For details and examples for all input fields, please visit the [Input tab](https://apify.com/jurooravec/apify-store-scraper/input-schema).
+For details and examples for all input fields, please visit the [Input tab](https://apify.com/jurooravec/skcris-scraper/input-schema).
 
 ### Filter options
 
-You can run Profesia.sk Scraper as is, with the default options, to get a sample of the job offers (detailed version).
+You can run SKCRIS Scraper as is, with the default options, to get a sample of the organisation entries (fast mode).
 
-Otherwise, you can set these filters:
+Otherwise, you can filter by:
 
-- Keyword(s) (full-text search)
-- Minimum salary (per month / per hour)
-- minimum salary (per month / per hour)
-- Employment type (full-time, part-time, freelance, internship, voluntary)
-- Remote status (remote, partial, on-site)
-- Job offer age (in days)
-
-Alternatively, you can set up [a custom search filter](https://www.profesia.sk/search_offers.php), and pass the resulting [search results URL](https://www.profesia.sk/praca/skrateny-uvazok/?count_days=1&positions[]=40&salary=1000&salary_period=m&skills[]=73_15_5_12) to the `startUrls` input option.
-
-Hence you can e.g. use Profesia.sk Scraper to dynamically check for existence of certain job offers.
+- Region (kraj)
+- First letter
 
 ### Input examples
 
-#### Example 1: Get summary of all job offers in last 20 days for full-time on-site cooks with salary 6+ eur/hr
+#### Example 1: Get first 200 organisations (fast mode)
 
 ```json
 {
-  "datasetType": "jobOffers",
-  "jobOfferFilterEmploymentType": "fte",
-  "jobOfferFilterLastNDays": 20,
-  "jobOfferFilterMinSalaryPeriod": "hour",
-  "jobOfferFilterMinSalaryValue": 6,
-  "jobOfferFilterQuery": "kuchar",
-  "jobOfferFilterRemoteWorkType": "noRemote",
+  "datasetType": "organisations",
+  "entryIncludeLinkedResources": false, // Omit skip relationships to other entries
+  "listingFilterMaxCount": 200,
+  "listingItemsPerPage": 200
 }
 ```
 
-#### Example 2: Same as above, but specified by providing a custom search results URL
+#### Example 2: Same as above, but specified by providing a start URL
 
 ```json
 {
-  "startUrls": ["https://www.profesia.sk/praca/kuchar/plny-uvazok/?count_days=20&remote_work=0&salary=6&salary_period=h"]
+  "startUrls": ["https://www.skcris.sk/portal/web/guest/register-organizations"],
+  "entryIncludeLinkedResources": false,
+  "listingFilterMaxCount": 200,
+  "listingItemsPerPage": 200
 }
 ```
 
-#### Example 3: (Advanced) Same as above, but re-configure the crawler to increase the request timeout to 5 min and request retries to 5
+#### Example 3: Get all researchers (detailed mode)
 
 ```json
 {
-  "startUrls": ["https://www.profesia.sk/praca/kuchar/plny-uvazok/?count_days=20&remote_work=0&salary=6&salary_period=h"],
-  "requestHandlerTimeoutSecs": 300,
-  "maxRequestRetries": 5
+  "datasetType": "researchers",
+  "entryIncludeLinkedResources": true, // Include skip relationships to other entries
+}
+```
+
+#### Example 4: (Advanced) Same as above, but re-configure the crawler to increase concurrency
+
+```json
+{
+  "datasetType": "researchers",
+  "entryIncludeLinkedResources": true, // Include skip relationships to other entries
+  "maxConcurrency": 8
 }
 ```
 
