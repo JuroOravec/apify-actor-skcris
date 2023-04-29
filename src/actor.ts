@@ -6,17 +6,22 @@ import {
   RouterHandler,
   createCheerioRouter,
 } from 'crawlee';
-import { captureError, createApifyActor, logLevelHandlerWrapper } from 'apify-actor-utils';
+import {
+  captureError,
+  createApifyActor,
+  logLevelHandlerWrapper,
+  setupSentry,
+} from 'apify-actor-utils';
 import { omitBy } from 'lodash';
 import * as Sentry from '@sentry/node';
 
 import type { ActorInput } from './config';
 import type { RouteLabel } from './types';
 import { stats } from './lib/stats';
-import { setupSentry } from './lib/sentry';
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
 import { pickCrawlerInputFields, validateInput } from './validation';
+import { getPackageJsonInfo } from './utils/package';
 
 /**
  * # SKCRIS Basic Info
@@ -74,7 +79,8 @@ import { pickCrawlerInputFields, validateInput } from './validation';
 // - Document - https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadDocument&p_p_cacheability=cacheLevelPage&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_projectSearchResult_WAR_cvtiappweb_action=downloadDocument&_projectSearchResult_WAR_cvtiappweb_implicitModel=true&documentId=3407035
 
 export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> => {
-  setupSentry({ enabled: !!process.env.APIFY_IS_AT_HOME });
+  const pkgJson = getPackageJsonInfo(module, ['name']);
+  setupSentry({ sentryOptions: { serverName: pkgJson.name } });
 
   // See docs:
   // - https://docs.apify.com/sdk/js/
