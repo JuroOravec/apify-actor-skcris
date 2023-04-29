@@ -197,6 +197,18 @@ Otherwise, you can filter by:
 - Region (kraj)
 - First letter
 
+### Limit options
+
+To limit how many results you get, set `listingFilterMaxCount` to desired amount.
+
+Best practice:
+
+- Keep `listingFilterMaxCount` no higher than 500. Increasing `listingFilterMaxCount` increases 1) the chance of the requests failing and 2) memory requirements.
+
+- Set `listingFilterMaxCount` to a multiple of `listingItemsPerPage`. Otherwise, you will get more results than you wanted.
+
+   Example: If I want 800 results, I set `listingFilterMaxCount` to 800, and `listingItemsPerPage` to 400.
+
 ### Input examples
 
 #### Example 1: Get first 200 organisations (fast mode)
