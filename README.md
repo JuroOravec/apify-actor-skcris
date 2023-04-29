@@ -248,139 +248,253 @@ To export the data, head over to the Storage tab.
 
 ![Profesia.sk Actor dataset overview](./public/imgs/profesia-sk-actor-dataset-overview1.png)
 
-## Sample output from Profesia.sk Scraper
+## Sample output from SKSCRI Scraper
 
-### Job offer
+### Organisation
 
 ```json
 {
-  "listingUrl": "https://www.profesia.sk/praca/?page_num=5",
-  "employerName": null,
-  "employerUrl": "https://www.profesia.sk/praca/prva-stavebna-sporitelna/C11358?page_num=5",
-  "employerLogoUrl": "https://www.profesia.sk/customdesigns/EasyDesign/1/292/images/11358/logo.png?page_num=5",
-  "offerName": null,
-  "offerUrl": "https://www.profesia.sk/praca/prva-stavebna-sporitelna/O4563553?page_num=5",
-  "offerId": "O4563553",
-  "location": "Stará Ľubovňa",
-  "labels": [],
-  "lastChangeRelativeTime": "pred 11 hodinami",
-  "lastChangeType": "added",
-  "salaryRange": "2 000 EUR/mesiac",
-  "salaryRangeLower": 2000,
-  "salaryRangeUpper": null,
-  "salaryCurrency": "eur",
-  "salaryPeriod": "month",
-  "employmentTypes": [
-    "selfemploy"
+  "guid": "cfOrg_32",
+  "url": "https://www.skcris.sk/portal/register-organizations?p_p_id=organisationSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_organisationSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfOrg_32",
+  "name": "Company Name, s.r.o.",
+  "acronym": null,
+  "ičo": "12345678",
+  "description": "-",
+  "govDept": "bez príslušnosti k orgánu štátu a štátnej správy",
+  "skNace": "poradenské služby v oblasti podnikania a riadenia",
+  "financingType": "hospodárska organizácia",
+  "orgType": "podnikateľský sektor vav",
+  "activityMain": "iná prevažujúca činnosť ako výskum a vývoj",
+  "activitySpec": "technické vedy / informačné a komunikačné technológie / riadenie procesov",
+  "email": [
+    "email@address.sk"
   ],
-  "startDate": "Dohodou",
-  "phoneNumbers": [
-    "+421123456789"
-  ],
-  "datePosted": "2023-04-22",
-  "jobInfoResponsibilities": "Ponúkame pracovné miesta v Starej Ľubovni, Kežmarku a v Spišskej Belej.Sme úspešná firma, plná úspešných ľudí!Chcete zažiť úspech? Ste tu správne! Sme PSS, Prvá stavebná sporiteľňa, s najvyšším podielom na trhu a zaradili sme sa do rebríčka TOP 3 finančných inštitúcií poskytujúcich produkty na financovanie bývania.Pridajte sa k nám a naučíme Vás, ako sa stať expertom na financovanie bývania.Čo bude Vaša úloha v tíme na pozícii obchodný zástupca:spravovať klientske portfólio PSSsamostatne viesť obchodné rokovaniavyhľadávať nových klientovaktívne hľadať a ponúkať klientom riešenia v oblasti financovania bývaniarealizovať obchodné ciele v oblasti sprostredkovania predaja produktov PSSbudovať tímovú spoluprácu",
-  "jobInfoBenefits": "Čo ponúkame:komplexné portfólio produktovstabilné pracovné miesto – kancelária, notebook, databáza klientovadministratívnu a právnu podporubezplatnú certifikáciu v NBSodborné vzdelávanie a  školenia na rozvoj obchodného potenciáluatraktívnu províznu schému, motivačné súťaže, TOP klubyteambuildingypodporu pre začínajúcich obchodných zástupcov – finančná podpora, mentorvideoporadenstvo – online komunikácia s klientombezplatnú marketingovú podporuflexibilný pracovný časprácu na živnosť alebo ako právnická osoba",
-  "jobReqEducation": "stredoškolské s maturitou\nnadstavbové/vyššie odborné vzdelanie\nvysokoškolské I. stupňa\nvysokoškolské II. stupňa\nvysokoškolské III. stupňa",
-  "jobReqIndustry": "stredoškolské s maturitou\nnadstavbové/vyššie odborné vzdelanie\nvysokoškolské I. stupňa\nvysokoškolské II. stupňa\nvysokoškolské III. stupňa",
-  "jobReqOther": "Microsoft Word - ZákladyMicrosoft Excel - Základy",
-  "jobReqSuitableForGraduate": "Áno",
-  "jobReqPersonalSkills": "Čím nás oslovíte:ste ľudský, empatický, sebavedomý, svedomitýmáte príjemné vystupovaniemáte obchodného duchachcete na sebe neustále pracovať a rozvíjať saviete pracovať samostatne, ale rozumiete dôležitosti tímovej spolupráceuž teraz sa tešíte na stretnutia s klientommáte minimálne SŠ vzdelanie s maturitou",
-  "employerDescription": "Sme experti na financovanie bývania a na trhu pôsobíme už 30 rokov. Naše produkty využilo viac ako 2,5 milióna klientov, ktorým sme pomohli splniť si sen o vlastnom bývaní.\n\nZastávame hodnoty, ktoré zabezpečujú férový prístup ku klientom a aj k našim kolegom. Naše úspechy sú výsledkom tímovej spolupráce a práce kolegov motivovaných pestrým benefitným programom a adekvátnym finančným ohodnotením.\n\nAk sa chcete stať súčasťou tímu centrály PSS a nenašli ste pozíciu, ktorá by Vás oslovila, určite nám napíšte na [email protected] \nV prípade záujmu o prácu obchodného zástupcu v regióne, ktorý aktuálne nemá aktívnu inzerciu, prihláste sa prosím na nasledujúcom linku a uveďte svoje kontaktné údaje:\nhttps://ats.nalgoo.com/sk/gate/fopss/position/65267/\n\nNaši kolegovia sa Vám ozvú a preberú s Vami aktuálne možnosti, pretože v PSS si vážime každý jeden talent a vieme oceniť prínos každého kolegu!",
-  "employeeCount": "250-499 zamestnancov",
-  "employerContact": "Kontaktná osoba: Ing. Name RedactedTel.: +421123456789-mail: poslať životopis",
-  "locationCategs": [
+  "phone": "+421 12 3456789",
+  "website": "www.example.sk",
+  "certificateText": "-",
+  "certificate": null,
+  "certificateStartDate": null,
+  "certificateEndDate": null,
+  "activitySpec1": "technické vedy",
+  "activitySpec2": "informačné a komunikačné technológie",
+  "activitySpec3": "riadenie procesov",
+  "addresses": [                // Only in detailed entry
     {
-      "url": "https://www.profesia.sk/praca/stara-lubovna/?page_num=5",
-      "name": "Stará Ľubovňa"
+      "country": "Country [name=Slovensko, code=SK]",
+      "countryName": "Slovensko",
+      "adrLine1": "123",
+      "adrLine2": null,
+      "adrLine3": "StreetName",
+      "adrLine4": "Okres Prešov",
+      "adrLine5": "Prešovský kraj",
+      "postCode": "01234",
+      "cityTown": "Prešov",
+      "cfUri": null,
+      "region": "Prešovský kraj",
+      "district": "Okres Prešov",
+      "township": "Prešov",
+      "type": "kontaktná adresa"
     }
   ],
-  "professionCategs": [
+  "researchers": [              // Only in detailed entry
     {
-      "url": "https://www.profesia.sk/praca/klientsky-pracovnik/?page_num=5",
-      "name": "Klientský pracovník"
+      "id": 18067,
+      "name": "LastName FirstName",
+      "roles": [
+        {
+          "role": "kontaktná osoba"
+        }
+      ],
+      "url": "https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_researcherSearchResult_WAR_cvtiappweb_action=goresdetail&id=18067"
+    }
+  ],
+  "projects": [                 // Only in detailed entry
+    {
+      "id": 5696,
+      "name": "Zlepšovanie kvality a zvyšovanie výkonnosti MSP aplikáciou metód maximalizácie podnikateľského úspechu 2",
+      "roles": [
+        {
+          "role": "spoluriešiteľská organizácia"
+        }
+      ],
+      "url": "https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_projectSearchResult_WAR_cvtiappweb_javax.portlet.action=projectgodetail&id=5696"
+    }
+  ],
+  "parentOrgs": [],             // Only in detailed entry
+  "childOrgs": [],              // Only in detailed entry
+  "productOutputs": [],         // Only in detailed entry
+  "patentOutputs": [],          // Only in detailed entry
+  "publicationOutputs": [],     // Only in detailed entry
+  "innovationOutputs": [],      // Only in detailed entry
+  "equipmentInfra": [],         // Only in detailed entry
+  "facilityInfra": [],          // Only in detailed entry
+  "serviceInfra": [],           // Only in detailed entry
+  "addressesCount": 1,          // Only in detailed entry
+  "researchersCount": 3,        // Only in detailed entry
+  "projectsCount": 1,           // Only in detailed entry
+  "parentOrgsCount": 0,         // Only in detailed entry
+  "childOrgsCount": 0,          // Only in detailed entry
+  "productOutputsCount": 0,     // Only in detailed entry
+  "patentOutputsCount": 0,      // Only in detailed entry
+  "publicationOutputsCount": 0, // Only in detailed entry
+  "innovationOutputsCount": 0,  // Only in detailed entry
+  "equipmentInfraCount": 0,     // Only in detailed entry
+  "facilityInfraCount": 0,      // Only in detailed entry
+  "serviceInfraCount": 0,       // Only in detailed entry
+  "metadata": {
+    "actorId": "2YjGNj4zGPIntw4wh",
+    "actorRunId": "mFTsl9nmpSle091a7",
+    "actorRunUrl": "https://console.apify.com/actors/2YjGNj4zGPIntw4wh/runs/mFTsl9nmpSle091a7",
+    "contextId": "Q1QNClHk6C",
+    "requestId": "IXPi6SyvIPdkyxe",
+    "originalUrl": "https://www.skcris.sk/portal/register-organizations?p_p_id=organisationSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_organisationSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfOrg_32",
+    "loadedUrl": "https://www.skcris.sk/portal/register-organizations?p_p_id=organisationSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_organisationSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfOrg_32",
+    "dateHandled": "2023-04-28T17:29:19.255Z",
+    "numberOfRetries": 0
+  }
+}
+```
+
+### Projects
+
+```json
+{
+  "guid": "cfProj_15010",
+  "url": "https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_projectSearchResult_WAR_cvtiappweb_javax.portlet.action=projectgodetail&guid=cfProj_15010",
+  "name": "Adaptívne osobné finančné plánovanie šité na mieru a správa aktív a pasív",
+  "projectCode": "8179",
+  "duration": "01.09.2013 - 31.08.2015",
+  "abstract": "Cieľom projektu TAP-PALM je dodávať podporný softvér finančným plánovačom zákazníkov, ktorý poskytuje bezprecedentné prispôsobenie potrebám a cieľom klientov počas životnosti finančného plánu. Nový prístup využíva hybridné matematické modely (analytická simulácia a simulácia založená na agentoch) a BPM orientované na cieľ.",
+  "keywords": [],
+  "grantCallName": "04.03 2013 EUREKA SK Výzva MŠVVaŠ SR na predkladanie návrhov projektov na získanie účelovej podpory na spolufinancovanie projektov programu EUREKA SK",
+  "awardAmountEur": "150000.0",
+  "activitySpec": "prírodné vedy / počítačové a informatické vedy (okrem 020300 informačné a komunikačné technológie a 050804 knižničná a informačná veda) / ostatné príbuzné odbory informatických vied",
+  "researchType": "aplikovaný (priemyselný) výskum",
+  "programmeType": "medzinárodná spolupráca - eureka",
+  "durationStart": "01.09.2013",
+  "durationEnd": "31.08.2015",
+  "activitySpec1": "prírodné vedy",
+  "activitySpec2": "počítačové a informatické vedy (okrem 020300 informačné a komunikačné technológie a 050804 knižničná a informačná veda)",
+  "activitySpec3": "ostatné príbuzné odbory informatických vied",
+  "researchers": [              // Only in detailed entry
+    {
+      "id": 24665,
+      "name": "LastName FirstName",
+      "roles": [
+        {
+          "role": "riešiteľ"
+        }
+      ],
+      "url": "https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_researcherSearchResult_WAR_cvtiappweb_action=goresdetail&id=24665"
+    }
+  ],
+  "organisations": [            // Only in detailed entry
+    {
+      "id": 4026,
+      "name": "Company Name, s.r.o.",
+      "roles": [
+        {
+          "role": "žiadateľ"
+        }
+      ],
+      "url": "https://www.skcris.sk/portal/register-organizations?p_p_id=organisationSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_organisationSearchResult_WAR_cvtiappweb_javax.portlet.action=organizationgodetail&id=4026"
+    }
+  ],
+  "productOutputs": [],         // Only in detailed entry
+  "patentOutputs": [],          // Only in detailed entry
+  "publicationOutputs": [],     // Only in detailed entry
+  "innovationOutputs": [],      // Only in detailed entry
+  "equipmentInfra": [],         // Only in detailed entry
+  "facilityInfra": [],          // Only in detailed entry
+  "serviceInfra": [],           // Only in detailed entry
+  "documents": [],              // Only in detailed entry
+  "researchersCount": 1,        // Only in detailed entry
+  "organisationsCount": 1,      // Only in detailed entry
+  "productOutputsCount": 0,     // Only in detailed entry
+  "patentOutputsCount": 0,      // Only in detailed entry
+  "publicationOutputsCount": 0, // Only in detailed entry
+  "innovationOutputsCount": 0,  // Only in detailed entry
+  "equipmentInfraCount": 0,     // Only in detailed entry
+  "facilityInfraCount": 0,      // Only in detailed entry
+  "serviceInfraCount": 0,       // Only in detailed entry
+  "documentsCount": 0,          // Only in detailed entry
+  "metadata": {
+    "actorId": "2YjGNj4zGPIntw4wh",
+    "actorRunId": "2OwhtQlclOj853cj2",
+    "actorRunUrl": "https://console.apify.com/actors/2YjGNj4zGPIntw4wh/runs/2OwhtQlclOj853cj2",
+    "contextId": "bPSoxOMbEc",
+    "requestId": "PCFg1VineLv8yq5",
+    "originalUrl": "https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_projectSearchResult_WAR_cvtiappweb_javax.portlet.action=projectgodetail&guid=cfProj_15010",
+    "loadedUrl": "https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_projectSearchResult_WAR_cvtiappweb_javax.portlet.action=projectgodetail&guid=cfProj_15010",
+    "dateHandled": "2023-04-28T18:49:15.444Z",
+    "numberOfRetries": 0
+  }
+}
+```
+
+### Researchers
+
+```json
+{
+  "guid": "cfPers_1123",
+  "url": "https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_researcherSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfPers_1123",
+  "fullName": "FirstName LastName",
+  "datasource": "výskumník - crepč",
+  "industry": "ostatné príbuzné odbory pedagogických vied, učiteľstva a vychovávateľstva",
+  "orgType": "sektor vysokých škôl",
+  "keywords": [],
+  "annotation": "-",
+  "website": null,
+  "email": [
+    "email@example.sk"
+  ],
+  "organisations": [            // Only in detailed entry
+    {
+      "id": 1264,
+      "name": "Univerzita Komenského v Bratislave, Pedagogická fakulta",
+      "roles": [
+        {
+          "role": "výskumník"
+        }
+      ],
+      "url": "https://www.skcris.sk/portal/register-organizations?p_p_id=organisationSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_organisationSearchResult_WAR_cvtiappweb_javax.portlet.action=organizationgodetail&id=1264"
+    }
+  ],
+  "projects": [],               // Only in detailed entry
+  "productOutputs": [],         // Only in detailed entry
+  "patentOutputs": [],          // Only in detailed entry
+  "publicationOutputs": [       // Only in detailed entry
+    {
+      "id": 459296,
+      "name": "Ako viesť deti k prekonávaniu psychických problémov...",
+      "roles": [
+        {
+          "role": "autor"
+        }
+      ],
+      "url": "https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_researcherSearchResult_WAR_cvtiappweb_action=linkedvysledky&type=publication&id=459296"
     },
-    {
-      "url": "https://www.profesia.sk/praca/obchodny-zastupca/?page_num=5",
-      "name": "Obchodný zástupca"
-    }
+    // ...
   ],
+  "innovationOutputs": [],      // Only in detailed entry
+  "citationOutputs": [],        // Only in detailed entry
+  "organisationsCount": 1,      // Only in detailed entry
+  "projectsCount": 0,           // Only in detailed entry
+  "productOutputsCount": 0,     // Only in detailed entry
+  "patentOutputsCount": 0,      // Only in detailed entry
+  "publicationOutputsCount": 6, // Only in detailed entry
+  "innovationOutputsCount": 0,  // Only in detailed entry
+  "citationOutputsCount": 0,    // Only in detailed entry
   "metadata": {
-    "actorId": "xLwYqj7sxMcGRcYZt",
-    "actorRunId": "TzHJ97DLccjt41Vjf",
-    "actorRunUrl": "https://console.apify.com/actors/xLwYqj7sxMcGRcYZt/runs/TzHJ97DLccjt41Vjf",
-    "contextId": "Zj3uHMtLtq",
-    "requestId": "Q1E7YC5MfacPnSa",
-    "originalUrl": "https://www.profesia.sk/praca/?page_num=5",
-    "loadedUrl": "https://www.profesia.sk/praca/?page_num=5",
-    "dateHandled": "2023-04-22T17:42:14.677Z",
+    "actorId": "2YjGNj4zGPIntw4wh",
+    "actorRunId": "9QSIhfpo23yTt9USW",
+    "actorRunUrl": "https://console.apify.com/actors/2YjGNj4zGPIntw4wh/runs/9QSIhfpo23yTt9USW",
+    "contextId": "cP7NpdPf8L",
+    "requestId": "wzi5GGf8ODheLh7",
+    "originalUrl": "https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_researcherSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfPers_1123",
+    "loadedUrl": "https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&_researcherSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfPers_1123",
+    "dateHandled": "2023-04-28T19:22:49.801Z",
     "numberOfRetries": 0
-  }
-}
-```
-
-### Companies, professions, industries, languages list
-
-```json
-{
-  "url": "https://www.profesia.sk/praca/-hola-akademia/C255259",
-  "name": "!Hola! akadémia s.r.o.",
-  "count": 1,
-  "metadata": {
-    "actorId": "xLwYqj7sxMcGRcYZt",
-    "actorRunId": "vQ5k8aXbwTROahMeK",
-    "actorRunUrl": "https://console.apify.com/actors/xLwYqj7sxMcGRcYZt/runs/vQ5k8aXbwTROahMeK",
-    "contextId": "bMlblASmeT",
-    "requestId": "RlmnlCkaYRPDswZ",
-    "originalUrl": "https://www.profesia.sk/praca/zoznam-spolocnosti",
-    "loadedUrl": "https://www.profesia.sk/praca/zoznam-spolocnosti/",
-    "dateHandled": "2023-04-22T18:05:38.248Z",
-    "numberOfRetries": 0
-  }
-}
-```
-
-### Locations list
-
-```json
-{
-  "url": "https://www.profesia.sk/praca/bratislavsky-kraj/",
-  "name": "Bratislavský kraj",
-  "count": 7890,
-  "region": "Bratislavský kraj",
-  "country": "Slovenská republika",
-  "metadata": {
-    "actorId": "xLwYqj7sxMcGRcYZt",
-    "actorRunId": "8qwRsXGUZsxlZjRDK",
-    "actorRunUrl": "https://console.apify.com/actors/xLwYqj7sxMcGRcYZt/runs/8qwRsXGUZsxlZjRDK",
-    "contextId": "eEJHPCqmT5",
-    "requestId": "1k0DgwIuJ2QoZ3D",
-    "originalUrl": "https://www.profesia.sk/praca/zoznam-lokalit",
-    "loadedUrl": "https://www.profesia.sk/praca/zoznam-lokalit/",
-    "dateHandled": "2023-04-22T19:33:23.110Z",
-    "numberOfRetries": 0
-  }
-}
-```
-
-### Partners list
-
-```json
-{
-  "name": "Absolventi.STUBA.SK",
-  "url": "http://www.absolventi.stuba.sk/",
-  "description": "Je určený všetkým absolventom, študentom, priateľom i priaznivcom STU v Bratislave. Jeho prostredníctvom môžete získať informácie o aktuálnom dianí, či hľadať medzi našimi čerstvými absolventmi perspektívnych zamestnancov pre svoje firmy. Práce na portáli a jeho definitívnej podobe ešte stále pokračujú.",
-  "logoUrl": "https://www.profesia.sk/images/partner_logos/stuba_90x37.png",
-  "category": "Špecializované servery",
-  "metadata": {
-    "actorId": "xLwYqj7sxMcGRcYZt",
-    "actorRunId": "pdXzgtjmuOsJw2U2M",
-    "actorRunUrl": "https://console.apify.com/actors/xLwYqj7sxMcGRcYZt/runs/pdXzgtjmuOsJw2U2M",
-    "contextId": "rVPpH6Bam1",
-    "requestId": "6DUFNu05KLfFoVN",
-    "originalUrl": "https://www.profesia.sk/partneri",
-    "loadedUrl": "https://www.profesia.sk/partneri",
-    "dateHandled": "2023-04-22T19:34:44.968Z",
-    "numberOfRetries": 1
   }
 }
 ```
