@@ -77,30 +77,76 @@ Analysis:
 
 For details and examples for all input fields, please visit the [Input tab](https://apify.com/jurooravec/apify-store-scraper/input-schema).
 
-// TODO
-
 ## How much does it cost to scrape SKCRIS?
 
-### Job offers
+### Organisations
 
 <table>
   <thead>
     <tr>
       <td></td>
-      <td><strong>1000 results</strong></td>
-      <td><strong>Full run (~21k) results</strong></td>
+      <td><strong>100 results</strong></td>
+      <td><strong>Full run (~2.6k) results</strong></td>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Fast run</td>
-      <td>$0.023 in 52s</td>
-      <td>$0.482 in 18m 12s</td>
+      <td>$0.014 in 0h 2m</td>
+      <td>$0.289 in 0h 42m</td>
     </tr>
     <tr>
       <td>Detailed run</td>
-      <td>$0.042 in 1m 44s</td>
-      <td>$0.870 in 36m 30s</td>
+      <td>$0.080 in 0h 11m 37s</td>
+      <td>$2.008 in 4h 52m</td>
+    </tr>
+  </tbody>
+</table>
+
+### Projects
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <td><strong>100 results</strong></td>
+      <td><strong>Full run (~24.9k) results</strong></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fast run</td>
+      <td>$0.017 in 0h 2m 30s</td>
+      <td>$4.288 in 6h 14m</td>
+    </tr>
+    <tr>
+      <td>Detailed run</td>
+      <td>$0.066 in 0h 9m 40s</td>
+      <td>$16.548 in 40h 7m</td>
+    </tr>
+  </tbody>
+</table>
+
+### Researchers
+
+<table>
+  <thead>
+    <tr>
+      <td></td>
+      <td><strong>100 results</strong></td>
+      <td><strong>Full run (~37.5k) results</strong></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fast run</td>
+      <td>$0.016 in 0h 2m 23s</td>
+      <td>$3.567 in 8h 39m</td>
+    </tr>
+    <tr>
+      <td>Detailed run</td>
+      <td>$0.052 in 0h 7m 30s</td>
+      <td>$16.949 in 41h 5m</td>
     </tr>
   </tbody>
 </table>
@@ -108,9 +154,34 @@ For details and examples for all input fields, please visit the [Input tab](http
 <br/>
 <br/>
 
-Checking for new job offers every day => costs less than $1 per month ($0.713 = 31 * $0.023).
+- Fast run of whole database - $8.14 over 10-20h
+- Detailed run of whole database - $35.51 over 42-90h
 
 Remember that with the [Apify Free plan](https://apify.com/pricing) you have $5 free usage per month.
+
+NOTE: Prices are only indicative, based on runs of 200 entries.
+
+### Comments on performance
+
+Speed of scraping depends on:
+
+1. Detailed vs fast mode:
+   - In fast mode, we only request the HTML (web page). This is much faster.
+   - In detailed mode, we make 10-20+ more requests against the server, and the server has to look up items in the database for each request. Hence it's slower.
+
+2. Server load
+   - If there is no load on the server, we can do more requests to get the results faster.
+   - But if there is already considerable load (e.g. someone else is scraping too), then expect slower response.
+
+> **To ensure you get the data, you should configure the crawler settings to minimize timeout errors**
+
+Recommended settings:
+
+- maxConcurrency - 8 if there's little load on the server, otherwise 3
+- Memory (RAM) - 512 MB (there's no point in going higher)
+- Timeout - No timeout
+
+// TODO
 
 ## Input options
 
