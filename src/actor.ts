@@ -3,6 +3,7 @@ import {
   CheerioCrawler,
   CheerioCrawlerOptions,
   CheerioCrawlingContext,
+  ProxyConfiguration,
   RouterHandler,
   createCheerioRouter,
 } from 'crawlee';
@@ -96,7 +97,8 @@ export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> 
         handlerWrappers: ({ input }) => [
           logLevelHandlerWrapper<CheerioCrawlingContext<any, any>>(input?.logLevel ?? 'info'),
         ],
-        createCrawler: ({ router, input }) => createCrawler({ router, input, crawlerConfig }),
+        createCrawler: ({ router, input, proxy }) =>
+          createCrawler({ router, input, proxy, crawlerConfig }),
       });
 
       const startUrls: string[] = [];
@@ -110,15 +112,12 @@ export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> 
 };
 
 // prettier-ignore
-const createCrawler = async ({ router, input, crawlerConfig }: {
+const createCrawler = async ({ router, input, proxy, crawlerConfig }: {
   input: ActorInput | null;
   router: RouterHandler<CheerioCrawlingContext>;
+  proxy?: ProxyConfiguration;
   crawlerConfig?: CheerioCrawlerOptions;
 }) => {
-  const proxyConfiguration = process.env.APIFY_IS_AT_HOME
-    ? await Actor.createProxyConfiguration(input?.proxy)
-    : undefined;
-
   return new CheerioCrawler({
     // ----- 1. DEFAULTS -----
     maxRequestsPerMinute: 120,
@@ -139,7 +138,7 @@ const createCrawler = async ({ router, input, crawlerConfig }: {
     ...omitBy(pickCrawlerInputFields(input ?? {}), (field) => field === undefined),
     
     // ----- 3. CONFIG THAT USER CANNOT CHANGE -----
-    proxyConfiguration,
+    proxyConfiguration: proxy,
     requestHandler: router,
     // Capture errors as a separate Apify/Actor dataset and pass errors to Sentry
     failedRequestHandler: async ({ error, request, log }) => {
