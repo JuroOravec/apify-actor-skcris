@@ -250,7 +250,7 @@ To export the data, head over to the Storage tab.
 
 ## Sample output from SKSCRI Scraper
 
-### Organisation
+### Organisations output
 
 ```json
 {
@@ -355,7 +355,7 @@ To export the data, head over to the Storage tab.
 }
 ```
 
-### Projects
+### Projects output
 
 ```json
 {
@@ -432,7 +432,7 @@ To export the data, head over to the Storage tab.
 }
 ```
 
-### Researchers
+### Researchers output
 
 ```json
 {
@@ -499,18 +499,22 @@ To export the data, head over to the Storage tab.
 }
 ```
 
-## How to integrate Profesia.sk Scraper with other services, APIs or Actors
+## How to integrate SKCRIS Scraper with other services, APIs or Actors
+
 You can connect the actor with many of the [integrations on the Apify platform](https://apify.com/integrations). You can integrate with Make, Zapier, Slack, Airbyte, GitHub, Google Sheets, Google Drive, [and more](https://docs.apify.com/integrations). Or you can use [webhooks](https://docs.apify.com/integrations/webhooks) to carry out an action whenever an event occurs, e.g. get a notification whenever Instagram API Scraper successfully finishes a run.
 
-## Use Profesia.sk actor with Apify API
+## Use SKCRIS actor with Apify API
+
 The Apify API gives you programmatic access to the Apify platform. The API is organized around RESTful HTTP endpoints that enable you to manage, schedule and run Apify actors. The API also lets you access any datasets, monitor actor performance, fetch results, create and update versions, and more.
 
 To access the API using Node.js, use the `apify-client` NPM package. To access the API using Python, use the `apify-client` PyPI package.
 
-Check out the [Apify API reference](https://docs.apify.com/api/v2) docs for full details or click on the [API tab](https://apify.com/jurooravec/apify-store-scraper/api) for code examples.
+Check out the [Apify API reference](https://docs.apify.com/api/v2) docs for full details or click on the [API tab](https://apify.com/jurooravec/skcris-scraper/api) for code examples.
 
-## Is it legal to scrape Profesia.sk?
+## Is it legal to scrape SKCRIS?
+
 It is legal to scrape publicly available data such as product descriptions, prices, or ratings. Read Apify's blog post on [the legality of web scraping](https://blog.apify.com/is-web-scraping-legal/) to learn more.
 
-## Who can I contact for issues with Profesia.sk actor?
-To report issues and find help, head over to the [Discord community](https://discord.com/channels/801163717915574323).
+## Who can I contact for issues with SKCRIS actor?
+
+To report issues and find help, head over to the [Discord community](https://discord.com/channels/801163717915574323), or email me at juraj[dot]oravec[dot]josefson[at]gmail[dot]com
