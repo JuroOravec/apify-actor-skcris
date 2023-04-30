@@ -26,9 +26,6 @@ const createTagFn = (tag: string) => (t: string) => `<${tag}>${t}</${tag}>`;
 const strong = createTagFn('strong');
 const newLine = (repeats = 1) => '<br/>'.repeat(repeats);
 
-export const pickCrawlerInputFields = <T extends CrawlerConfigActorInput>(config: T) =>
-  pick(config, Object.keys(crawlerInput));
-
 export interface CustomActorInput {
   /** Choose what kind of data you want to extract - Organisations, researchers, projects, ... */
   datasetType?: DatasetType;

@@ -3,22 +3,18 @@ import {
   CheerioCrawler,
   CheerioCrawlerOptions,
   CheerioCrawlingContext,
-  ProxyConfiguration,
-  RouterHandler,
   createCheerioRouter,
 } from 'crawlee';
 import {
-  captureError,
   createApifyActor,
+  createErrorHandler,
+  createHttpCrawlerOptions,
   logLevelHandlerWrapper,
   setupSentry,
 } from 'apify-actor-utils';
-import { omitBy } from 'lodash';
-import * as Sentry from '@sentry/node';
 
-import { ActorInput, pickCrawlerInputFields } from './config';
+import { ActorInput } from './config';
 import type { RouteLabel } from './types';
-import { stats } from './lib/stats';
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
 import { validateInput } from './validation';
@@ -79,6 +75,23 @@ import { getPackageJsonInfo } from './utils/package';
 // - Infra - Service - https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_projectSearchResult_WAR_cvtiappweb_action=projlinkedinfrastr&zmaz=proj&id=294&type=serv
 // - Document - https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadDocument&p_p_cacheability=cacheLevelPage&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_projectSearchResult_WAR_cvtiappweb_action=downloadDocument&_projectSearchResult_WAR_cvtiappweb_implicitModel=true&documentId=3407035
 
+/** Crawler options that **may** be overriden by user input */
+const defaultCrawlerOptions: CheerioCrawlerOptions = {
+  maxRequestsPerMinute: 120,
+  // NOTE: 4-hour timeout. We need high timeout for the linked resources.
+  // Some organisations can have up to 40k outputs. In best case scenario,
+  // this can take about 30 mins. From my experience, some entries may be
+  // can take 30-60 mins.
+  requestHandlerTimeoutSecs: 60 * 60 * 4,
+  // headless: true,
+  // maxRequestsPerCrawl: 20,
+
+  // SHOULD I USE THESE?
+  // See https://docs.apify.com/academy/expert-scraping-with-apify/solutions/rotating-proxies
+  // useSessionPool: true,
+  // sessionPoolOptions: {},
+};
+
 export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> => {
   const pkgJson = getPackageJsonInfo(module, ['name']);
   setupSentry({ sentryOptions: { serverName: pkgJson.name } });
@@ -97,8 +110,23 @@ export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> 
         handlerWrappers: ({ input }) => [
           logLevelHandlerWrapper<CheerioCrawlingContext<any, any>>(input?.logLevel ?? 'info'),
         ],
-        createCrawler: ({ router, input, proxy }) =>
-          createCrawler({ router, input, proxy, crawlerConfig }),
+        createCrawler: ({ router, proxy, input }) => {
+          const options = createHttpCrawlerOptions<CheerioCrawlerOptions, ActorInput>({
+            input,
+            defaults: defaultCrawlerOptions,
+            overrides: {
+              requestHandler: router,
+              proxyConfiguration: proxy,
+              // Capture errors as a separate Apify/Actor dataset and pass errors to Sentry
+              failedRequestHandler: createErrorHandler({
+                reportingDatasetId: 'REPORTING',
+                sendToSentry: true,
+              }),
+              ...crawlerConfig,
+            },
+          });
+          return new CheerioCrawler(options);
+        },
       });
 
       const startUrls: string[] = [];
@@ -109,54 +137,4 @@ export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> 
     },
     { statusMessage: 'Crawling finished!' }
   );
-};
-
-// prettier-ignore
-const createCrawler = async ({ router, input, proxy, crawlerConfig }: {
-  input: ActorInput | null;
-  router: RouterHandler<CheerioCrawlingContext>;
-  proxy?: ProxyConfiguration;
-  crawlerConfig?: CheerioCrawlerOptions;
-}) => {
-  return new CheerioCrawler({
-    // ----- 1. DEFAULTS -----
-    maxRequestsPerMinute: 120,
-    // NOTE: 4-hour timeout. We need high timeout for the linked resources.
-    // Some organisations can have up to 40k outputs. In best case scenario,
-    // this can take about 30 mins. From my experience, some entries may be
-    // can take 30-60 mins.
-    requestHandlerTimeoutSecs: 60 * 60 * 4,
-    // headless: true,
-    // maxRequestsPerCrawl: 20,
-    
-    // SHOULD I USE THESE?
-    // See https://docs.apify.com/academy/expert-scraping-with-apify/solutions/rotating-proxies
-    // useSessionPool: true,
-    // sessionPoolOptions: {},
-
-    // ----- 2. CONFIG FROM INPUT -----
-    ...omitBy(pickCrawlerInputFields(input ?? {}), (field) => field === undefined),
-    
-    // ----- 3. CONFIG THAT USER CANNOT CHANGE -----
-    proxyConfiguration: proxy,
-    requestHandler: router,
-    // Capture errors as a separate Apify/Actor dataset and pass errors to Sentry
-    failedRequestHandler: async ({ error, request, log }) => {
-      stats.addError(request.url, (error as Error)?.message);
-      const url = request.loadedUrl || request.url;
-      captureError({
-        error: error as Error,
-        url,
-        log,
-        reportingDatasetId: 'REPORTING',
-        allowScreenshot: true,
-        onErrorCapture: ({ error, report }) => {
-          Sentry.captureException(error, { extra: report as any });
-        },
-      });
-    },
-
-    // ----- 4. OVERRIDES - E.G. TEST CONFIG -----
-    ...omitBy(crawlerConfig ?? {}, (field) => field === undefined),
-  });
 };
