@@ -35,19 +35,6 @@ export const joiUrlNotEmpty = Joi.string()
   .uri({ scheme: ['http', 'https'] });
 export const joiUrlNotEmptyNullable = joiUrlNotEmpty.allow(null);
 
-// www.profesia.sk
-export const joiProfesiaUrl = Joi.string()
-  .min(1)
-  .uri({
-    scheme: ['http', 'https'],
-    domain: {
-      minDomainSegments: 2,
-      maxDomainSegments: 3,
-      tlds: { allow: ['sk'] },
-    },
-  });
-export const joiProfesiaUrlNullable = joiProfesiaUrl.allow(null);
-
 ////////////////////////
 // Objects
 ////////////////////////
