@@ -16,12 +16,12 @@ import {
 import { omitBy } from 'lodash';
 import * as Sentry from '@sentry/node';
 
-import type { ActorInput } from './config';
+import { ActorInput, pickCrawlerInputFields } from './config';
 import type { RouteLabel } from './types';
 import { stats } from './lib/stats';
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
-import { pickCrawlerInputFields, validateInput } from './validation';
+import { validateInput } from './validation';
 import { getPackageJsonInfo } from './utils/package';
 
 /**
