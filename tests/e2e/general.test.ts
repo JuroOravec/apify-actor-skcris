@@ -42,6 +42,13 @@ describe(
   () => {
     beforeEach(() => {
       vi.resetAllMocks();
+
+      vi.mock('pkginfo', () => ({
+        default: (obj, { include }) => {
+          obj.exports = obj.exports || {};
+          obj.exports.name = 'test_package_name';
+        },
+      }));
     });
 
     testCases.forEach(({ datasetType, expectedUrl, schema }) => {

@@ -89,6 +89,13 @@ describe(
   () => {
     beforeEach(() => {
       vi.resetAllMocks();
+
+      vi.mock('pkginfo', () => ({
+        default: (obj, { include }) => {
+          obj.exports = obj.exports || {};
+          obj.exports.name = 'test_package_name';
+        },
+      }));
     });
 
     detailUrls.forEach(({ type, url, simpleSchema }) => {
