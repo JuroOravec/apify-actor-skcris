@@ -152,11 +152,12 @@
         "type": "integer",
         "description": "Indicates how many times the request is retried if <a href=\"https://crawlee.dev/api/basic-crawler/interface/BasicCrawlerOptions#requestHandler\">BasicCrawlerOptions.requestHandler</a> fails.",
         "example": 3,
-        "prefill": 3,
+        "prefill": 10,
         "minimum": 0,
         "nullable": true,
         "sectionCaption": "Crawler configuration (Advanced)",
-        "sectionDescription": "These options are applied directly to the Crawler. In majority of cases you don't need to change these. See https://crawlee.dev/api/basic-crawler/interface/BasicCrawlerOptions"
+        "sectionDescription": "These options are applied directly to the Crawler. In majority of cases you don't need to change these. See https://crawlee.dev/api/basic-crawler/interface/BasicCrawlerOptions",
+        "default": 10
       },
       "maxRequestsPerMinute": {
         "title": "maxRequestsPerMinute",
@@ -188,7 +189,9 @@
         "type": "integer",
         "description": "Sets the maximum concurrency (parallelism) for the crawl.",
         "minimum": 1,
-        "nullable": true
+        "nullable": true,
+        "default": 5,
+        "prefill": 5
       },
       "navigationTimeoutSecs": {
         "title": "navigationTimeoutSecs",
