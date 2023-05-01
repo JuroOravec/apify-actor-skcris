@@ -216,7 +216,7 @@ const simpleSkCrisPrjItemValidationFields: Record<
   abstract: joiStrNotEmptyNullable,
   keywords: Joi.array().items(joiStrNotEmptyNullable),
   grantCallName: joiStrNotEmptyNullable,
-  awardAmountEur: joiStrNotEmptyNullable,
+  awardAmountEur: joiNumIntNonNegNullable,
   researchType: joiStrNotEmptyNullable,
   programmeType: joiStrNotEmptyNullable,
   duration: joiStrNotEmptyNullable,

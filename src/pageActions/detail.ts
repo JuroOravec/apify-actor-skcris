@@ -325,7 +325,13 @@ const mapFieldsByType: {
     Abstrakt: { key: 'abstract' },
     'Kľúčové slová': { key: 'keywords', map: keywordsMap },
     'Názov výzvy': { key: 'grantCallName' },
-    'Pridelená suma': { key: 'awardAmountEur', map: (val?: string) => val?.replace(/\s*eur$/i, '') ?? null }, // prettier-ignore
+    'Pridelená suma': {
+      key: 'awardAmountEur',
+      map: (val?: string) => {
+        const maybeNum = Number.parseFloat(val?.replace(/\s*eur$/i, '') || '-');
+        return Number.isNaN(maybeNum) ? null : maybeNum;
+      },
+    },
     'Odbor vedy a techniky': { key: 'activitySpec', map: toLowerCase },
     'Charakter VaV': { key: 'researchType', map: toLowerCase },
     'Typ programu, finanč. zdroja': { key: 'programmeType', map: toLowerCase },
