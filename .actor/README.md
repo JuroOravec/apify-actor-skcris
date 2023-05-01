@@ -1,4 +1,4 @@
-# SKCRIS Scraper
+SKCRIS Scraper
 
 ===============================
 
@@ -260,7 +260,7 @@ Once the actor is done, you can see the overview of results in the Output tab.
 
 To export the data, head over to the Storage tab.
 
-![SKCRIS Actor dataset overview](./public/imgs/profesia-sk-actor-dataset-overview1.png)
+![SKCRIS Actor dataset overview](/public/imgs/skcris-actor-dataset-overview.png)
 
 ## Sample output from SKSCRI Scraper
 
