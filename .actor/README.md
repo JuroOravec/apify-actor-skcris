@@ -47,6 +47,8 @@ The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
   - For advanced needs, you can pass Crawler configuration via Input.
 - **Tested daily for highly reliability**
   - The actor is regularly tested end-to-end to minimize the risk of a broken integration.
+- **Privacy-compliant (GDPR)**
+  - By default, personal data is redacted to avoid privacy issues. You can opt-in to include un-censored data.
 - **Error handling**
   - Errors are captured and surfaced in the `REPORTING` dataset. (See Storage > Dataset > Select dropdown)
 
@@ -526,6 +528,22 @@ Check out the [Apify API reference](https://docs.apify.com/api/v2) docs for full
 ## Is it legal to scrape SKCRIS?
 
 It is legal to scrape publicly available data such as product descriptions, prices, or ratings. Read Apify's blog post on [the legality of web scraping](https://blog.apify.com/is-web-scraping-legal/) to learn more.
+
+However, SKCRIS dataset also includes personal data about researchers.
+
+By default, this personal data is redacted, and in such case it's safe to scrape the data.
+
+To get the un-redacted data, toggle on the "Include personal data" actor input.
+
+> **Warning:** Including personal data is done at your own risk. It is your responsiblity to make sure you have obtained a consent or have a legal basis for using the data.
+>
+> By using this actor, you agree not to hold the author of this actor liable for privacy or data-related issues that may arise during its use.
+
+Redacted fields may show a message like this instead of the actual value:
+
+```txt
+<Redacted property "email". To include the actual value, toggle ON the Actor input option "Include personal data">
+```
 
 ## Who can I contact for issues with SKCRIS actor?
 
