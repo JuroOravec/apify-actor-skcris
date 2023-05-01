@@ -2,6 +2,7 @@ import Joi from 'joi';
 import {
   crawlerInputValidationFields,
   loggingInputValidationFields,
+  privacyInputValidationFields,
   proxyInputValidationFields,
 } from 'apify-actor-utils';
 
@@ -13,6 +14,7 @@ const inputValidationSchema = Joi.object<ActorInput>({
   ...crawlerInputValidationFields,
   ...proxyInputValidationFields,
   ...loggingInputValidationFields,
+  ...privacyInputValidationFields,
 
   datasetType: Joi.string().valid(...DATASET_TYPE).optional(), // prettier-ignore
   startUrls: Joi.array().optional(),

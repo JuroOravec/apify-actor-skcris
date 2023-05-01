@@ -1,4 +1,4 @@
-import { capitalize, pick } from 'lodash';
+import { capitalize } from 'lodash';
 import {
   createActorConfig,
   createActorInputSchema,
@@ -13,9 +13,11 @@ import {
 import {
   CrawlerConfigActorInput,
   LoggingActorInput,
+  PrivacyActorInput,
   ProxyActorInput,
   crawlerInput,
   loggingInput,
+  privacyInput,
   proxyInput,
 } from 'apify-actor-utils';
 
@@ -71,6 +73,7 @@ export interface ActorInput
   extends CrawlerConfigActorInput,
     LoggingActorInput,
     ProxyActorInput,
+    PrivacyActorInput,
     CustomActorInput {}
 
 const customActorInput: Record<keyof CustomActorInput, Field> = {
@@ -188,6 +191,7 @@ const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorIn
     ...customActorInput,
     // Include the common fields in input
     ...proxyInput,
+    ...privacyInput,
     ...crawlerInput,
     ...loggingInput,
   },

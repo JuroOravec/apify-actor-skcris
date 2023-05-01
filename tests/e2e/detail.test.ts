@@ -26,6 +26,7 @@ const detailUrls: {
   type: ResourceType;
   simpleSchema: Joi.ObjectSchema;
   detailedSchema: Joi.ObjectSchema;
+  redactedProps: string[];
   expectedCounts: object;
   url: string;
 }[] = [
@@ -34,6 +35,7 @@ const detailUrls: {
     type: 'prj',
     simpleSchema: simpleSkCrisPrjItemValidation,
     detailedSchema: detailedSkCrisPrjItemValidation,
+    redactedProps: ['researchers'],
     expectedCounts: {
       researchersCount: 3,
       productOutputsCount: 1,
@@ -52,6 +54,7 @@ const detailUrls: {
     type: 'org',
     simpleSchema: simpleSkCrisOrgItemValidation,
     detailedSchema: detailedSkCrisOrgItemValidation,
+    redactedProps: ['email', 'phone', 'researchers'],
     expectedCounts: {
       addressesCount: 1,
       researchersCount: 2,
@@ -73,6 +76,7 @@ const detailUrls: {
     type: 'res',
     simpleSchema: simpleSkCrisResItemValidation,
     detailedSchema: detailedSkCrisResItemValidation,
+    redactedProps: ['guid', 'url', 'fullName', 'email'],
     expectedCounts: {
       productOutputsCount: 0,
       patentOutputsCount: 11,
@@ -107,6 +111,7 @@ describe(
           input: {
             startUrls: [url],
             entryIncludeLinkedResources: false,
+            includePersonalData: true,
             logLevel: 'debug',
           },
           runActor,
@@ -129,6 +134,7 @@ describe(
           input: {
             startUrls: [url],
             entryIncludeLinkedResources: true,
+            includePersonalData: true,
             logLevel: 'debug',
           },
           runActor,
@@ -137,6 +143,39 @@ describe(
             data.forEach((d) => {
               Joi.assert(d, detailedSchema);
               expect(d).toMatchObject(expectedCounts);
+            });
+          },
+        });
+      });
+    });
+
+    detailUrls.forEach(({ type, url, redactedProps }) => {
+      it(`censors personal data if includePersonalData=false (type: ${type})`, () => {
+        expect.assertions(1);
+
+        // Schema that checks that given fields are texts with comment about redaction
+        const schema = Joi.object(
+          redactedProps.reduce((agg, prop) => {
+            agg[prop] = Joi.string()
+              .required()
+              .min(1)
+              .regex(/Redacted property/);
+            return agg;
+          }, {})
+        ).unknown(true);
+
+        return runActorTest<any, ActorInput>({
+          vi,
+          input: {
+            startUrls: [url],
+            entryIncludeLinkedResources: true,
+            logLevel: 'debug',
+          },
+          runActor,
+          onPushData: async (data, done) => {
+            expect(data.length).toBeGreaterThan(0);
+            data.forEach((d) => {
+              Joi.assert(d, schema);
             });
           },
         });

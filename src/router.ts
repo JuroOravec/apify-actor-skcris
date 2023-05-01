@@ -3,13 +3,23 @@ import {
   createCheerioRouteMatchers,
   cheerioDOMLib,
   RouteHandler,
-  pushDataWithMetadata,
+  pushData,
   DOMLib,
+  PrivacyMask,
 } from 'apify-actor-utils';
 import type { Response as GotResponse } from 'got-scraping';
 import type { IncomingMessage } from 'http';
 
-import { RouteLabel, ResourceType, ORG_RESOURCE, RES_RESOURCE, PRJ_RESOURCE } from './types';
+import {
+  RouteLabel,
+  ResourceType,
+  ORG_RESOURCE,
+  RES_RESOURCE,
+  PRJ_RESOURCE,
+  DetailedSkCrisOrgItem,
+  DetailedSkCrisResItem,
+  DetailedSkCrisPrjItem,
+} from './types';
 import { SkCrisListingPageContext, listingPageActions } from './pageActions/listing';
 import { CookieRef, createCookie } from './api/skcris';
 import { SkCrisDetailPageContext, detailDOMActions, detailPageActions } from './pageActions/detail';
@@ -24,9 +34,10 @@ interface RouteData {
   linkedResourceFetcher: (
     context: Omit<SkCrisDetailPageContext, 'resourceType'> & { log: Log }
   ) => Promise<Record<string, unknown>>;
+  privacyMask: PrivacyMask<any>;
 }
 
-const routeDataByType: Record<ResourceType, RouteData> = {
+const routeDataByType = {
   // Example https://www.skcris.sk/portal/register-organizations?p_p_id=organisationSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_organisationSearchResult_WAR_cvtiappweb_javax.portlet.action=organizationgodetail&guid=cfOrg_4328&lang=sk_SK
   org: {
     listingLabel: 'ORG_LISTING',
@@ -35,6 +46,11 @@ const routeDataByType: Record<ResourceType, RouteData> = {
     domExtractor: detailDOMActions.extractOrgDetail,
     linkedResourceFetcher: (ctx) =>
       detailPageActions.fetchLinkedResourcesForResourceType('org', ORG_RESOURCE, ctx),
+    privacyMask: {
+      email: () => true,
+      phone: () => true,
+      researchers: () => true,
+    } satisfies PrivacyMask<DetailedSkCrisOrgItem>,
   },
   // Example https://www.skcris.sk/portal/register-researchers?p_p_id=researcherSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_researcherSearchResult_WAR_cvtiappweb_javax.portlet.action=godetail&guid=cfPers_669&lang=sk
   res: {
@@ -44,6 +60,12 @@ const routeDataByType: Record<ResourceType, RouteData> = {
     domExtractor: detailDOMActions.extractResDetail,
     linkedResourceFetcher: (ctx) =>
       detailPageActions.fetchLinkedResourcesForResourceType('res', RES_RESOURCE, ctx),
+    privacyMask: {
+      guid: () => true,
+      url: () => true,
+      fullName: () => true,
+      email: () => true,
+    } satisfies PrivacyMask<DetailedSkCrisResItem>,
   },
   // Example https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=1&p_p_state=normal&p_p_mode=view&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_projectSearchResult_WAR_cvtiappweb_javax.portlet.action=projectgodetail&guid=cfProj_20239&lang=sk_SK
   prj: {
@@ -53,8 +75,11 @@ const routeDataByType: Record<ResourceType, RouteData> = {
     domExtractor: detailDOMActions.extractPrjDetail,
     linkedResourceFetcher: (ctx) =>
       detailPageActions.fetchLinkedResourcesForResourceType('prj', PRJ_RESOURCE, ctx),
+    privacyMask: {
+      researchers: () => true,
+    } satisfies PrivacyMask<DetailedSkCrisPrjItem>,
   },
-};
+} satisfies Record<ResourceType, RouteData>;
 
 const getSessionCookieHeader = (res: GotResponse | IncomingMessage) => {
   // eg "JSESSIONID=860f4331294630b929871b06d5c6; Path=/portal; Secure"
@@ -109,9 +134,17 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
   Object.entries(routeDataByType).reduce<Record<RouteLabel, RouteHandler<Ctx>>>(
     (
       handlers,
-      [resourceType, { listingLabel, detailLabel, domExtractor, linkedResourceFetcher }]
+      [resourceType, { listingLabel, detailLabel, domExtractor, linkedResourceFetcher, privacyMask }] // prettier-ignore
     ) => {
-      const { listingFilterRegion, listingFilterFirstLetter, entryIncludeLinkedResources, listingFilterMaxCount, listingCountOnly, listingItemsPerPage } = input; // prettier-ignore
+      const {
+        listingFilterRegion,
+        listingFilterFirstLetter,
+        entryIncludeLinkedResources,
+        listingFilterMaxCount,
+        listingCountOnly,
+        listingItemsPerPage,
+        includePersonalData,
+      } = input;
 
       // Configure listing handlers for all resource types
       handlers[listingLabel] = async (ctx) => {
@@ -182,7 +215,11 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
         }
 
         const entry = { ...entryFromPage, ...linkedResources };
-        await pushDataWithMetadata(entry, ctx);
+        await pushData(entry, ctx, {
+          includeMetadata: true,
+          showPrivate: includePersonalData,
+          privacyMask: privacyMask as PrivacyMask<any>,
+        });
       };
 
       return handlers;
