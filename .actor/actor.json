@@ -2,7 +2,7 @@
   "actorSpecification": 1,
   "name": "skcris-scraper",
   "title": "SKCRIS Scraper",
-  "description": "Extract Slovak research organisations, projects, employees, equipment, services, or outputs, and more.",
+  "description": "Extract Slovak research organisations, projects, employees, and data on their equipment, services, or outputs, and more.",
   "version": "0.1",
   "dockerfile": "./Dockerfile",
   "input": {
@@ -40,7 +40,7 @@
       "entryIncludeLinkedResources": {
         "title": "Include linked resources",
         "type": "boolean",
-        "description": "If checked, the scraper will obtain more detailed info by downloading\n        linked resources (e.g. org's researchers, org's projects, ...).<br/><br/>\n        If un-checked, only the data from the detail page is extracted.<br/><br/>\n        Note 1: This is a different type of data than what is scraped from individual entries,\n        as this data describes the <strong>relationships</strong>.<br/><br/>\n        Note 2: This dramatically increases the running time (full dataset takes days, up to a week).<br/>\n        Consider that the whole DB has more than 500,000 entries of all kinds.<br/>\n        Whichever dataset you choose, the downloaded entries WILL have relationships\n        to those 500k entries.<br/><br/>\n        For details, please refer to http://apify.com/store/jurooravec/profesia-sk-scraper#output",
+        "description": "If checked, the scraper will obtain more detailed info by downloading\n        linked resources (e.g. org's researchers, org's projects, ...).<br/><br/>\n        If un-checked, only the data from the detail page is extracted.<br/><br/>\n        Note 1: This is a different type of data than what is scraped from individual entries,\n        as this data describes the <strong>relationships</strong>.<br/><br/>\n        Note 2: This dramatically increases the running time (full dataset takes days, up to a week).<br/>\n        Consider that the whole DB has more than 500,000 entries of all kinds.<br/>\n        Whichever dataset you choose, the downloaded entries WILL have relationships\n        to those 500k entries.<br/><br/>\n        For details, please refer to https://apify.com/jurooravec/skcris-scraper#output",
         "example": true,
         "default": false
       },
