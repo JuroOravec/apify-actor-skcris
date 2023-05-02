@@ -42,6 +42,7 @@
     "lint:fix": "eslint ./src --ext .ts --fix",
     "migrate": "npx apify-actor-utils migrate -d ./dist/cjs/actor-migrations/migrations",
     "unmigrate": "npx apify-actor-utils unmigrate -d ./dist/cjs/actor-migrations/migrations",
+    "gen:readme": "ts-node ./src/readme.ts",
     "test": "vitest run",
     "coverage": "vitest run --coverage"
   },
@@ -68,7 +69,7 @@
     "actor-spec": "^0.1.0",
     "apify": "^3.1.4",
     "apify-actor-config": "^1.0.2",
-    "apify-actor-utils": "^0.8.6",
+    "apify-actor-utils": "^0.9.4",
     "apify-client": "^2.7.1",
     "cheerio": "^1.0.0-rc.12",
     "crawlee": "^3.3.1",
