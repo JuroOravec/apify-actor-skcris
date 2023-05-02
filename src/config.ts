@@ -209,7 +209,7 @@ const config = createActorConfig({
   name: actorSpec.platform.actorId,
   title: actorSpec.actor.title,
   description: actorSpec.actor.shortDesc,
-  version: '0.1',
+  version: '1.0',
   dockerfile: './Dockerfile',
   input: inputSchema,
   storages: {

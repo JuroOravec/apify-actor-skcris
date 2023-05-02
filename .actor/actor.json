@@ -2,8 +2,8 @@
   "actorSpecification": 1,
   "name": "skcris-scraper",
   "title": "SKCRIS Scraper",
-  "description": "Extract Slovak research organisations, projects, employees, and data on their equipment, services, or outputs, and more.",
-  "version": "0.1",
+  "description": "Extract Slovak research organisations, projects, employees, and data on their equipment, services, outputs, and more.",
+  "version": "1.0",
   "dockerfile": "./Dockerfile",
   "input": {
     "schemaVersion": 1,

@@ -2,15 +2,15 @@
 SKCRIS Scraper
 ===============================
 
-Extract Slovak research organisations, projects, employees, and data on their equipment, services, or outputs, and more.
+Extract Slovak research organisations, projects, employees, and data on their equipment, services, outputs, and more.
 
-## What is SKCRIS Scraper and how its work?
+## What is SKCRIS Scraper and how it works?
 
 [SK CRIS](https://www.skcris.sk/portal/) - Slovak Current research information system
-([What is CRIS?](https://en.wikipedia.org/wiki/Current_research_information_system)) - Is the authorative database
+([What is CRIS?](https://en.wikipedia.org/wiki/Current_research_information_system)) - Is the authoritative database
 on research in Slovakia.
 
-The database contains contant info, outputs, services,
+The database contains contact info, outputs, services,
 and project participation of organisations and researchers registered in Slovakia.
 If an organisation or a researcher received public funding for their research, you can
 find them here.
@@ -24,9 +24,9 @@ With SKCRIS Scraper, you can extract:
 For each of the above, you can:
 
 - Filter down by geographic region (kraj), or by starting letter
-- Select whether to include all related resources (e.g. org's employees, projects, equipement, ...)
+- Select whether to include all related resources (e.g. org's employees, projects, equipment, ...)
 
-See [outputs section](#outputs) for detailed decription.
+See the [outputs section](#outputs) for a detailed description.
 
 The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 
@@ -34,7 +34,7 @@ The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 
 - **Blazing fast**
   
-  - The actor doesn't use browser, which means it's fast and cheap.
+  - The actor doesn't use a browser, which means it's fast and cheap.
   - High throughput - browser paginates at 10 entries per page. This scraper goes at 500 entries per page
       (~ 13x speed performance improvement).
 - **3 kinds of datasets**
@@ -59,7 +59,7 @@ The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
   
   - For advanced needs, you can pass Crawler configuration via Input.
 
-- **Tested daily for highly reliability**
+- **Tested daily for high reliability**
   
   - The actor is regularly tested end-to-end to minimize the risk of a broken integration.
 
@@ -84,8 +84,8 @@ Lead gen:
 Research:
 
 - Find organisations and researchers related to your research topic of interest.
-- Find organisations with equipment you need.
-- Find mentors, or potential employers or employees
+- Find organisations with the equipment you need.
+- Find mentors, potential employers or employees
 
 Analysis:
 
@@ -238,12 +238,12 @@ For details and examples for all input fields, please visit the [Input tab](http
 
 NOTE: Prices are only indicative, based on runs of 200 entries.
 
-Remember that with the [Apify Free plan](https://apify.com/pricing) you have $5 free usage per month.
+Remember that with the [Apify Free plan](https://apify.com/pricing), you have $5 free usage per month.
 
 
 ### Comments on performance
 
-Speed of scraping depends on:
+The speed of scraping depends on:
 
 1. Detailed vs fast mode:
     - In fast mode, we only request the HTML (web page). This is much faster.
@@ -253,7 +253,7 @@ Speed of scraping depends on:
 2. Server load
     - If there is no load on the server, we can do more requests to get the results faster.
     - But if there is already considerable load (e.g. someone else is scraping too),
-    then expect slower response.
+    then expect a slower response.
 
 > **To ensure you get the data, you should configure the crawler settings to minimize timeout errors**
 
@@ -297,7 +297,7 @@ increases 1) the chance of the requests failing and 2) memory requirements.
 ### Input examples
 
 
-#### Example 1: Get first 200 organisations (fast mode)
+#### Example 1: Get the first 200 organisations (fast mode)
 
 ```json
 {
@@ -699,22 +699,22 @@ prices, or ratings. Read Apify's blog post on
 [the legality of web scraping](https://blog.apify.com/is-web-scraping-legal/)
 to learn more.
 
-However, following datasets include personal data:
+However, the following datasets include personal data:
 
 - Organisations dataset includes info about employees or researchers.
   - Fields: email, phone, researchers
-  - By default, this personal data is redacted, and in such case it's safe to scrape the data.
+  - By default, this personal data is redacted, and in such case, it's safe to scrape the data.
 - Researchers dataset includes info about researchers.
   - Fields: guid, url, fullName, email
-  - By default, this personal data is redacted, and in such case it's safe to scrape the data.
+  - By default, this personal data is redacted, and in such case, it's safe to scrape the data.
 - Projects dataset includes info about researchers.
   - Fields: researchers
-  - By default, this personal data is redacted, and in such case it's safe to scrape the data.
+  - By default, this personal data is redacted, and in such case, it's safe to scrape the data.
 
-To get the un-redacted data, toggle on the "Include personal data" actor input.
+To get the unredacted data, toggle on the "Include personal data" actor input.
 
 > **Warning:** Including personal data is done at your own risk. It is your
-responsiblity to make sure you have obtained a consent or have a legal basis
+responsibility to make sure you have obtained consent or have a legal basis
 for using the data.
 >
 > By using this actor, you agree not to hold the author of this actor liable for privacy
