@@ -1,14 +1,5 @@
 # TODO
-- README - update
-  // INPUT
-  // - Dataset type
-  // - Items per page
-  // - Page offset
-  // - Max items
-  // - Region filter
-  // - Letter filter
-  // OR
-  // - specific res detail
-  // - specific org detail
-  // - specific prj detail
-- integrate apify + github
+
+- Do I want to capture stats?
+
+  - See https://docs.apify.com/academy/expert-scraping-with-apify/solutions/saving-stats
