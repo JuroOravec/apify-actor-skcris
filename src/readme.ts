@@ -151,4 +151,4 @@ increases 1) the chance of the requests failing and 2) memory requirements.
   },
 } satisfies ApifyReadmeTemplatesOverrides;
 
-await renderReadme({ filepath: './.actor/README.md', actorSpec, templates });
+renderReadme({ filepath: './.actor/README.md', actorSpec, templates });
