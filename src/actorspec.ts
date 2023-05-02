@@ -25,7 +25,7 @@ const actorSpec = {
     title: 'SKCRIS Scraper',
     publicUrl: `https://apify.com/${authorId}/${actorId}`,
     shortDesc:
-      'Extract Slovak research organisations, projects, employees, and data on their equipment, services, or outputs, and more.',
+      'Extract Slovak research organisations, projects, employees, and data on their equipment, services, outputs, and more.',
     datasetOverviewImgUrl: '/public/imgs/skcris-actor-dataset-overview.png',
   },
   platform: {

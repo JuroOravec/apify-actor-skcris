@@ -28,7 +28,7 @@ const templates = {
 
   exampleInputs: [
     {
-      title: `Get first 200 organisations (fast mode)`,
+      title: `Get the first 200 organisations (fast mode)`,
       inputData: {
         datasetType: 'organisations',
         entryIncludeLinkedResources: false,
@@ -76,10 +76,10 @@ const templates = {
 
   hooks: {
     introActorLongDesc: `[SK CRIS](https://www.skcris.sk/portal/) - Slovak Current research information system
-([What is CRIS?](https://en.wikipedia.org/wiki/Current_research_information_system)) - Is the authorative database
+([What is CRIS?](https://en.wikipedia.org/wiki/Current_research_information_system)) - Is the authoritative database
 on research in Slovakia.
 
-The database contains contant info, outputs, services,
+The database contains contact info, outputs, services,
 and project participation of organisations and researchers registered in Slovakia.
 If an organisation or a researcher received public funding for their research, you can
 find them here.`,
@@ -88,7 +88,7 @@ find them here.`,
 For each of the above, you can:
 
 - Filter down by geographic region (kraj), or by starting letter
-- Select whether to include all related resources (e.g. org's employees, projects, equipement, ...)`,
+- Select whether to include all related resources (e.g. org's employees, projects, equipment, ...)`,
 
     useCases: `
 Lead gen:
@@ -98,8 +98,8 @@ Lead gen:
 Research:
 
 - Find organisations and researchers related to your research topic of interest.
-- Find organisations with equipment you need.
-- Find mentors, or potential employers or employees
+- Find organisations with the equipment you need.
+- Find mentors, potential employers or employees
 
 Analysis:
 
@@ -117,7 +117,7 @@ NOTE: Prices are only indicative, based on runs of 200 entries.`,
     costBeforeEnd: `
 ### Comments on performance
 
-Speed of scraping depends on:
+The speed of scraping depends on:
 
 1. Detailed vs fast mode:
     - In fast mode, we only request the HTML (web page). This is much faster.
@@ -127,7 +127,7 @@ Speed of scraping depends on:
 2. Server load
     - If there is no load on the server, we can do more requests to get the results faster.
     - But if there is already considerable load (e.g. someone else is scraping too),
-    then expect slower response.
+    then expect a slower response.
 
 > **To ensure you get the data, you should configure the crawler settings to minimize timeout errors**
 
