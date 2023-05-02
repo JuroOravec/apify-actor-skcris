@@ -23,6 +23,7 @@ import {
 
 import { alphabet, regionFilterNames } from './constants';
 import { DATASET_TYPE, DatasetType, REGION_TYPE, RegionType } from './types';
+import actorSpec from './actorspec';
 
 const createTagFn = (tag: string) => (t: string) => `<${tag}>${t}</${tag}>`;
 const strong = createTagFn('strong');
@@ -112,7 +113,7 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
         Consider that the whole DB has more than 500,000 entries of all kinds.${newLine()}
         Whichever dataset you choose, the downloaded entries WILL have relationships
         to those 500k entries.${newLine(2)}
-        For details, please refer to http://apify.com/store/jurooravec/profesia-sk-scraper#output`,
+        For details, please refer to ${actorSpec.actor.publicUrl}#output`,
     example: true,
     default: false,
   }),
@@ -182,8 +183,8 @@ crawlerInput.maxConcurrency.prefill = 5;
 
 const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorInput, Field>>>({
   schemaVersion: 1,
-  title: 'SKCRIS Scraper',
-  description: `Configure the SKCRIS Scraper. ${newLine(2)}
+  title: actorSpec.actor.title,
+  description: `Configure the ${actorSpec.actor.title}. ${newLine(2)}
       ${strong('NOTE:')} Either ${strong('Dataset type')} or
       ${strong('Start URLs')} must be given.`,
   type: 'object',
@@ -205,10 +206,9 @@ const outputSchema = createActorOutputSchema({
 
 const config = createActorConfig({
   actorSpecification: 1,
-  name: 'skcris-scraper',
-  title: 'SKCRIS Scraper',
-  description:
-    'Extract Slovak research organisations, projects, employees, equipment, services, or outputs, and more.',
+  name: actorSpec.platform.actorId,
+  title: actorSpec.actor.title,
+  description: actorSpec.actor.shortDesc,
   version: '0.1',
   dockerfile: './Dockerfile',
   input: inputSchema,
