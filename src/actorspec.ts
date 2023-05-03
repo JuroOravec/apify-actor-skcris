@@ -21,6 +21,7 @@ const actorId = 'skcris-scraper';
 const authorId = 'jurooravec';
 
 const actorSpec = {
+  actorspecVersion: 1,
   actor: {
     title: 'SKCRIS Scraper',
     publicUrl: `https://apify.com/${authorId}/${actorId}`,
