@@ -67,6 +67,7 @@
         "privacyCompliance": true,
         "errorMonitoring": true
       },
+      "perfTable": "default",
       "perfStats": [
         {
           "rowId": "fast",
@@ -272,6 +273,7 @@
         "privacyCompliance": true,
         "errorMonitoring": true
       },
+      "perfTable": "default",
       "perfStats": [
         {
           "rowId": "fast",
@@ -428,6 +430,7 @@
         "privacyCompliance": true,
         "errorMonitoring": true
       },
+      "perfTable": "default",
       "perfStats": [
         {
           "rowId": "fast",

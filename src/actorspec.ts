@@ -69,6 +69,7 @@ const actorSpec = {
       filters,
       modes,
       features: datasetFeatures,
+      perfTable: 'default',
       // prettier-ignore
       perfStats: [
         { rowId: 'fast', colId: '100items', mode: 'fast', count: 100, costUsd: 0.014, timeSec: 120 },
@@ -220,6 +221,7 @@ const actorSpec = {
       filters,
       modes,
       features: datasetFeatures,
+      perfTable: 'default',
       // prettier-ignore
       perfStats: [
         { rowId: 'fast', colId: '100items', mode: 'fast', count: 100, costUsd: 0.016, timeSec: 143 },
@@ -322,6 +324,7 @@ const actorSpec = {
       filters,
       modes,
       features: datasetFeatures,
+      perfTable: 'default',
       // prettier-ignore
       perfStats: [
         { rowId: 'fast', colId: '100items', mode: 'fast', count: 100, costUsd: 0.017, timeSec: 150 },

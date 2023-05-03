@@ -8,15 +8,17 @@ const templates = {
     privacyName: 'Include personal data',
   },
 
-  perfTable: {
-    rows: [
-      { rowId: 'fast', template: 'Fast run' },
-      { rowId: 'detailed', template: 'Detailed run' },
-    ],
-    cols: [
-      { colId: '100items', template: '100 results' },
-      { colId: 'fullRun', template: 'Full run (~ <%~ it.fn.millify(it.dataset.size) %> results)' },
-    ],
+  perfTables: {
+    default: {
+      rows: [
+        { rowId: 'fast', template: 'Fast run' },
+        { rowId: 'detailed', template: 'Detailed run' },
+      ],
+      cols: [
+        { colId: '100items', template: '100 results' },
+        { colId: 'fullRun', template: 'Full run (~ <%~ it.fn.millify(it.dataset.size) %> results)' }, // prettier-ignore
+      ],
+    },
   },
 
   features: {
@@ -75,7 +77,7 @@ const templates = {
   ],
 
   hooks: {
-    introActorLongDesc: `[SK CRIS](https://www.skcris.sk/portal/) - Slovak Current research information system
+    introAfterBegin: `[SK CRIS](https://www.skcris.sk/portal/) - Slovak Current research information system
 ([What is CRIS?](https://en.wikipedia.org/wiki/Current_research_information_system)) - Is the authoritative database
 on research in Slovakia.
 
@@ -138,7 +140,7 @@ Recommended settings:
 - **Memory (RAM)** - 512 MB (there's no point in going higher), or 256 MB if maxConcurrency is set to 3.
 - **Timeout** - No timeout.`,
 
-    inputAfterLimit: `Best practice:
+    limitBeforeEnd: `Best practice:
 
 - Keep \`listingFilterMaxCount\` no higher than 500. Increasing \`listingFilterMaxCount\`
 increases 1) the chance of the requests failing and 2) memory requirements.

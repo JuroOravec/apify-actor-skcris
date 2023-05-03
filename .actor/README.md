@@ -30,7 +30,11 @@ See the [outputs section](#outputs) for a detailed description.
 
 The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 
+
+
 ## Features
+
+
 
 - **Blazing fast**
   
@@ -74,6 +78,8 @@ The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 
 
 
+
+
 ## How can you use the data scraped from SKCRIS? (Examples)
 
 
@@ -94,6 +100,8 @@ Analysis:
 
 ## How to use SKCRIS Scraper
 
+
+
 1. Create a free Apify account using your email
 2. Open SKCRIS Scraper
 3. In Input, select the dataset to scrape, and filters to apply.
@@ -102,7 +110,11 @@ Analysis:
 
 For details and examples for all input fields, please visit the [Input tab](https://apify.com/jurooravec/skcris-scraper/input-schema).
 
+
+
 ## How much does it cost to scrape SKCRIS?
+
+
 
 ### Organisations
 
@@ -266,9 +278,15 @@ Recommended settings:
 
 ## Input options
 
+
+
 For details and examples for all input fields, please visit the [Input tab](https://apify.com/jurooravec/skcris-scraper/input-schema).
 
+
+
 ### Filter options
+
+
 
 You can run SKCRIS Scraper as is, with the default options, to get a sample of the 
 organisations entries
@@ -279,7 +297,11 @@ Otherwise, you can filter by:
   - Geographic region (kraj)
   - Starting letter
 
+
+
 ### Limit options
+
+
 
 To limit how many results you get, set `listingFilterMaxCount` to desired amount.
 
@@ -295,6 +317,8 @@ increases 1) the chance of the requests failing and 2) memory requirements.
     and `listingItemsPerPage` to 400.
 
 ### Input examples
+
+
 
 
 #### Example 1: Get the first 200 organisations (fast mode)
@@ -349,7 +373,11 @@ increases 1) the chance of the requests failing and 2) memory requirements.
 
 
 
+
+
 ## Outputs
+
+
 
 Once the actor is done, you can see the overview of results in the Output tab.
 
@@ -357,7 +385,11 @@ To export the data, head over to the Storage tab.
 
 ![SKCRIS Scraper dataset overview](/public/imgs/skcris-actor-dataset-overview.png)
 
+
+
 ## Sample output from SKCRIS Scraper
+
+
 
 ### Organisations output
 
@@ -666,7 +698,11 @@ To export the data, head over to the Storage tab.
 ```
 
 
+
+
 ## How to integrate SKCRIS Scraper with other services, APIs or Actors
+
+
 
 You can connect the actor with many of the
 [integrations on the Apify platform](https://apify.com/integrations).
@@ -677,7 +713,11 @@ Or you can use
 to carry out an action whenever an event occurs, e.g. get a notification whenever
 Instagram API Scraper successfully finishes a run.
 
+
+
 ## Use SKCRIS Scraper with Apify API
+
+
 
 The Apify API gives you programmatic access to the Apify platform.
 The API is organized around RESTful HTTP endpoints that enable you to manage,
@@ -692,7 +732,11 @@ for full details or click on the
 [API tab](https://apify.com/jurooravec/skcris-scraper/api)
 for code examples.
 
+
+
 ## Is it legal to scrape SKCRIS?
+
+
 
 It is legal to scrape publicly available data such as product descriptions,
 prices, or ratings. Read Apify's blog post on
@@ -727,8 +771,14 @@ Redacted fields may show a message like this instead of the actual value:
 ```
 
 
+
+
 ## Who can I contact for issues with SKCRIS actor?
+
+
 
 To report issues and find help,
 head over to the
 [Discord community](https://discord.com/channels/801163717915574323), or email me at juraj[dot]oravec[dot]josefson[at]gmail[dot]com
+
+
