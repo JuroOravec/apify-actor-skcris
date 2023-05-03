@@ -36,6 +36,8 @@ The data can be downloaded in JSON, JSONL, XML, CSV, Excel, or HTML formats.
 
 
 
+This actor is a robust production-grade solution suitable for businesses and those that need reliability.
+
 - **Blazing fast**
   
   - The actor doesn't use a browser, which means it's fast and cheap.
@@ -289,8 +291,7 @@ For details and examples for all input fields, please visit the [Input tab](http
 
 
 You can run SKCRIS Scraper as is, with the default options, to get a sample of the 
-organisations entries
-(fast mode).
+organisations entries (fast mode).
 
 Otherwise, you can filter by:
 
