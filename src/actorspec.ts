@@ -9,12 +9,15 @@ const modes = [
 ] satisfies DatasetModes[];
 
 const datasetFeatures = {
+  limitResultsCount: true,
   usesBrowser: false,
   proxySupport: true,
   configurable: true,
   regularlyTested: true,
   privacyCompliance: true,
   errorMonitoring: true,
+  changeMonitoring: false,
+  downstreamAutomation: true,
 } satisfies DatasetFeatures;
 
 const actorId = 'skcris-scraper';
@@ -67,8 +70,14 @@ const actorSpec = {
       size: 2600,
       isDefault: true,
       filters,
+      filterCompleteness: 'some',
       modes,
       features: datasetFeatures,
+      faultTolerance: {
+        dataLossScope: 'entry',
+        timeLostAvgSec: 5,
+        timeLostMaxSec: 7200, // 2 hrs
+      },
       perfTable: 'default',
       // prettier-ignore
       perfStats: [
@@ -219,8 +228,14 @@ const actorSpec = {
       size: 37500,
       isDefault: false,
       filters,
+      filterCompleteness: 'some',
       modes,
       features: datasetFeatures,
+      faultTolerance: {
+        dataLossScope: 'entry',
+        timeLostAvgSec: 5,
+        timeLostMaxSec: 60,
+      },
       perfTable: 'default',
       // prettier-ignore
       perfStats: [
@@ -322,8 +337,14 @@ const actorSpec = {
       size: 24900,
       isDefault: false,
       filters,
+      filterCompleteness: 'some',
       modes,
       features: datasetFeatures,
+      faultTolerance: {
+        dataLossScope: 'entry',
+        timeLostAvgSec: 5,
+        timeLostMaxSec: 60,
+      },
       perfTable: 'default',
       // prettier-ignore
       perfStats: [
