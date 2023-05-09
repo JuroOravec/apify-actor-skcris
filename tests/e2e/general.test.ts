@@ -69,6 +69,7 @@ describe(
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 4,
+            includePersonalData: true,
           },
           runActor,
           onBatchAddRequests: (reqs) => {

@@ -18,8 +18,10 @@ import type {
 // Numbers
 ////////////////////////
 export const joiNumInt = Joi.number().integer();
-export const joiNumIntNonNeg = Joi.number().integer().min(0);
-export const joiNumIntNonNegNullable = Joi.number().integer().min(0).allow(null);
+export const joiNumIntNonNeg = joiNumInt.min(0);
+export const joiNumIntNonNegNullable = joiNumIntNonNeg.allow(null);
+export const joiNumNonNeg = Joi.number().min(0);
+export const joiNumNonNegNullable = joiNumNonNeg.allow(null);
 
 ////////////////////////
 // Strings
@@ -216,7 +218,7 @@ const simpleSkCrisPrjItemValidationFields: Record<
   abstract: joiStrNotEmptyNullable,
   keywords: Joi.array().items(joiStrNotEmptyNullable),
   grantCallName: joiStrNotEmptyNullable,
-  awardAmountEur: joiNumIntNonNegNullable,
+  awardAmountEur: joiNumNonNegNullable,
   researchType: joiStrNotEmptyNullable,
   programmeType: joiStrNotEmptyNullable,
   duration: joiStrNotEmptyNullable,

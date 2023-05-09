@@ -62,6 +62,7 @@ describe(
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 4,
+            includePersonalData: true,
           },
           runActor,
           onBatchAddRequests: (reqs) => {
@@ -96,6 +97,8 @@ describe(
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 4,
+          includePersonalData: true,
+          listingCountOnly: true,
         },
         runActor,
         onBatchAddRequests: (reqs) => {
@@ -126,6 +129,7 @@ describe(
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 3,
+            includePersonalData: true,
             ...input,
           },
           runActor,
@@ -165,6 +169,7 @@ describe(
           listingItemsPerPage: 3,
           listingFilterFirstLetter: 'q',
           listingFilterRegion: 'nitra',
+          includePersonalData: true,
         },
         runActor,
         onBatchAddRequests: (reqs) => {
@@ -202,6 +207,7 @@ describe(
           listingItemsPerPage: 3,
           listingFilterFirstLetter: 'q',
           listingFilterRegion: 'presov',
+          includePersonalData: true,
         },
         runActor,
         onBatchAddRequests: (reqs) => {
