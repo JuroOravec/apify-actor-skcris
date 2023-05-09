@@ -13,10 +13,12 @@ import {
 import {
   CrawlerConfigActorInput,
   LoggingActorInput,
+  OutputActorInput,
   PrivacyActorInput,
   ProxyActorInput,
   crawlerInput,
   loggingInput,
+  outputInput,
   privacyInput,
   proxyInput,
 } from 'apify-actor-utils';
@@ -75,6 +77,7 @@ export interface ActorInput
     LoggingActorInput,
     ProxyActorInput,
     PrivacyActorInput,
+    OutputActorInput,
     CustomActorInput {}
 
 const customActorInput: Record<keyof CustomActorInput, Field> = {
@@ -193,6 +196,7 @@ const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorIn
     // Include the common fields in input
     ...proxyInput,
     ...privacyInput,
+    ...outputInput,
     ...crawlerInput,
     ...loggingInput,
   },

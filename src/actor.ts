@@ -1,20 +1,6 @@
-import { Actor } from 'apify';
-import {
-  CheerioCrawler,
-  CheerioCrawlerOptions,
-  CheerioCrawlingContext,
-  createCheerioRouter,
-} from 'crawlee';
-import {
-  createApifyActor,
-  createErrorHandler,
-  createHttpCrawlerOptions,
-  logLevelHandlerWrapper,
-  setupSentry,
-} from 'apify-actor-utils';
+import type { CheerioCrawlerOptions } from 'crawlee';
+import { createAndRunApifyActor } from 'apify-actor-utils';
 
-import { ActorInput } from './config';
-import type { RouteLabel } from './types';
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
 import { validateInput } from './validation';
@@ -76,7 +62,7 @@ import { getPackageJsonInfo } from './utils/package';
 // - Document - https://www.skcris.sk/portal/register-projects?p_p_id=projectSearchResult_WAR_cvtiappweb&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=downloadDocument&p_p_cacheability=cacheLevelPage&p_p_col_id=column-3&p_p_col_pos=2&p_p_col_count=3&_projectSearchResult_WAR_cvtiappweb_action=downloadDocument&_projectSearchResult_WAR_cvtiappweb_implicitModel=true&documentId=3407035
 
 /** Crawler options that **may** be overriden by user input */
-const defaultCrawlerOptions: CheerioCrawlerOptions = {
+const crawlerConfigDefaults: CheerioCrawlerOptions = {
   maxRequestsPerMinute: 120,
   // NOTE: 4-hour timeout. We need high timeout for the linked resources.
   // Some organisations can have up to 40k outputs. In best case scenario,
@@ -92,49 +78,25 @@ const defaultCrawlerOptions: CheerioCrawlerOptions = {
   // sessionPoolOptions: {},
 };
 
-export const run = async (crawlerConfig?: CheerioCrawlerOptions): Promise<void> => {
+export const run = async (crawlerConfigOverrides?: CheerioCrawlerOptions): Promise<void> => {
   const pkgJson = getPackageJsonInfo(module, ['name']);
-  setupSentry({ sentryOptions: { serverName: pkgJson.name } });
 
-  // See docs:
-  // - https://docs.apify.com/sdk/js/
-  // - https://docs.apify.com/academy/deploying-your-code/inputs-outputs#accepting-input-with-the-apify-sdk
-  // - https://docs.apify.com/sdk/js/docs/upgrading/upgrading-to-v3#apify-sdk
-  await Actor.main(
-    async () => {
-      const actor = await createApifyActor<CheerioCrawlingContext, RouteLabel, ActorInput>({
-        validateInput,
-        router: createCheerioRouter(),
-        routes,
-        routeHandlers: ({ input }) => createHandlers(input!),
-        handlerWrappers: ({ input }) => [
-          logLevelHandlerWrapper<CheerioCrawlingContext<any, any>>(input?.logLevel ?? 'info'),
-        ],
-        createCrawler: ({ router, proxy, input }) => {
-          const options = createHttpCrawlerOptions<CheerioCrawlerOptions, ActorInput>({
-            input,
-            defaults: defaultCrawlerOptions,
-            overrides: {
-              requestHandler: router,
-              proxyConfiguration: proxy,
-              // Capture errors as a separate Apify/Actor dataset and pass errors to Sentry
-              failedRequestHandler: createErrorHandler({
-                reportingDatasetId: 'REPORTING',
-                sendToSentry: true,
-              }),
-              ...crawlerConfig,
-            },
-          });
-          return new CheerioCrawler(options);
-        },
-      });
-
+  await createAndRunApifyActor({
+    actorType: 'cheerio',
+    actorName: pkgJson.name,
+    actorConfig: {
+      validateInput,
+      routes,
+      routeHandlers: ({ input }) => createHandlers(input!),
+    },
+    crawlerConfigDefaults,
+    crawlerConfigOverrides,
+    onActorReady: async (actor) => {
       const startUrls: string[] = [];
       if (actor.input?.startUrls) startUrls.push(...actor.input?.startUrls);
       else if (actor.input?.datasetType) startUrls.push(datasetTypeToUrl[actor.input?.datasetType]);
 
-      await actor.crawler.run(startUrls);
+      await actor.runActor(startUrls);
     },
-    { statusMessage: 'Crawling finished!' }
-  );
+  });
 };

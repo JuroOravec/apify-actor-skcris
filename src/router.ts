@@ -6,6 +6,7 @@ import {
   pushData,
   DOMLib,
   PrivacyMask,
+  PushDataOptions,
 } from 'apify-actor-utils';
 import type { Response as GotResponse } from 'got-scraping';
 import type { IncomingMessage } from 'http';
@@ -130,22 +131,33 @@ export const routes = Object.values(routeDataByType)
   )
   .flat(1);
 
-export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorInput) =>
-  Object.entries(routeDataByType).reduce<Record<RouteLabel, RouteHandler<Ctx>>>(
+export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorInput) => {
+  const {
+    listingFilterRegion,
+    listingFilterFirstLetter,
+    entryIncludeLinkedResources,
+    listingFilterMaxCount,
+    listingCountOnly,
+    listingItemsPerPage,
+    includePersonalData,
+    outputDatasetIdOrName,
+    outputPickFields,
+    outputRenameFields,
+  } = input;
+
+  const pushDataOptions = {
+    includeMetadata: true,
+    showPrivate: includePersonalData,
+    pickKeys: outputPickFields,
+    datasetIdOrName: outputDatasetIdOrName,
+    remapKeys: outputRenameFields,
+  } satisfies Omit<PushDataOptions<any>, 'privacyMask'>;
+
+  return Object.entries(routeDataByType).reduce<Record<RouteLabel, RouteHandler<Ctx>>>(
     (
       handlers,
       [resourceType, { listingLabel, detailLabel, domExtractor, linkedResourceFetcher, privacyMask }] // prettier-ignore
     ) => {
-      const {
-        listingFilterRegion,
-        listingFilterFirstLetter,
-        entryIncludeLinkedResources,
-        listingFilterMaxCount,
-        listingCountOnly,
-        listingItemsPerPage,
-        includePersonalData,
-      } = input;
-
       // Configure listing handlers for all resource types
       handlers[listingLabel] = async (ctx) => {
         const url = ctx.request.loadedUrl || ctx.request.url;
@@ -216,8 +228,7 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
 
         const entry = { ...entryFromPage, ...linkedResources };
         await pushData(entry, ctx, {
-          includeMetadata: true,
-          showPrivate: includePersonalData,
+          ...pushDataOptions,
           privacyMask: privacyMask as PrivacyMask<any>,
         });
       };
@@ -226,3 +237,4 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
     },
     {} as any
   );
+};

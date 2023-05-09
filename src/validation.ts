@@ -2,6 +2,7 @@ import Joi from 'joi';
 import {
   crawlerInputValidationFields,
   loggingInputValidationFields,
+  outputInputValidationFields,
   privacyInputValidationFields,
   proxyInputValidationFields,
 } from 'apify-actor-utils';
@@ -15,6 +16,7 @@ const inputValidationSchema = Joi.object<ActorInput>({
   ...proxyInputValidationFields,
   ...loggingInputValidationFields,
   ...privacyInputValidationFields,
+  ...outputInputValidationFields,
 
   datasetType: Joi.string().valid(...DATASET_TYPE).optional(), // prettier-ignore
   startUrls: Joi.array().optional(),
@@ -24,7 +26,7 @@ const inputValidationSchema = Joi.object<ActorInput>({
   listingFilterMaxCount: Joi.number().min(0).integer().optional(),
   listingItemsPerPage: Joi.number().min(0).integer().optional(),
   listingCountOnly: Joi.boolean().optional(),
-});
+} satisfies Record<keyof ActorInput, Joi.Schema>);
 
 export const validateInput = (input: ActorInput | null) => {
   Joi.assert(input, inputValidationSchema);
