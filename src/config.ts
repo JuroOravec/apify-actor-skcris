@@ -148,8 +148,8 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
     description: `If set, only up to this number of entries will be extracted.
         The actual number of entries might be higher than this due to multiple
         pages being scraped at the same time.`,
-    prefill: 100,
-    example: 100,
+    prefill: 50,
+    example: 50,
     minimum: 1,
     nullable: true,
   }),
@@ -160,8 +160,8 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
         ${strong('NOTE:')} Default is set to 500. This balances 1) slow server start-up time,
         2) total server response time, 3) the risk of the request failure.`,
     default: 500,
-    prefill: 500,
-    example: 500,
+    prefill: 50,
+    example: 50,
     minimum: 1,
     nullable: true,
   }),
