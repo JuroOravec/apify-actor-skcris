@@ -17,6 +17,8 @@ const datasetFeatures = {
   privacyCompliance: true,
   errorMonitoring: true,
   changeMonitoring: false,
+  integratedETL: true,
+  integratedCache: true,
   downstreamAutomation: true,
 } satisfies DatasetFeatures;
 

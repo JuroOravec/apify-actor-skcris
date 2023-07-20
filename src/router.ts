@@ -3,10 +3,9 @@ import {
   createCheerioRouteMatchers,
   cheerioDOMLib,
   RouteHandler,
-  pushData,
   DOMLib,
   PrivacyMask,
-  PushDataOptions,
+  ActorRouterContext,
 } from 'apify-actor-utils';
 import type { Response as GotResponse } from 'got-scraping';
 import type { IncomingMessage } from 'http';
@@ -26,6 +25,12 @@ import { CookieRef, createCookie } from './api/skcris';
 import { SkCrisDetailPageContext, detailDOMActions, detailPageActions } from './pageActions/detail';
 import { regionFilterNames } from './constants';
 import type { ActorInput } from './config';
+
+type SkCrisRouterContext = ActorRouterContext<
+  CheerioCrawlingContext<any, any>,
+  RouteLabel,
+  ActorInput
+>;
 
 interface RouteData {
   listingLabel: RouteLabel;
@@ -114,7 +119,7 @@ const createFetchFn = (ctx: CrawlingContext, cookie: CookieRef) => {
 
 export const routes = Object.values(routeDataByType)
   .map(({ listingLabel, detailLabel, path }) =>
-    createCheerioRouteMatchers<CheerioCrawlingContext, RouteLabel>([
+    createCheerioRouteMatchers<CheerioCrawlingContext, SkCrisRouterContext, RouteLabel>([
       {
         name: detailLabel,
         handlerLabel: detailLabel,
@@ -139,21 +144,11 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
     listingFilterMaxCount,
     listingCountOnly,
     listingItemsPerPage,
-    includePersonalData,
-    outputDatasetIdOrName,
-    outputPickFields,
-    outputRenameFields,
   } = input;
 
-  const pushDataOptions = {
-    includeMetadata: true,
-    showPrivate: includePersonalData,
-    pickKeys: outputPickFields,
-    datasetIdOrName: outputDatasetIdOrName,
-    remapKeys: outputRenameFields,
-  } satisfies Omit<PushDataOptions<any>, 'privacyMask'>;
-
-  return Object.entries(routeDataByType).reduce<Record<RouteLabel, RouteHandler<Ctx>>>(
+  return Object.entries(routeDataByType).reduce<
+    Record<RouteLabel, RouteHandler<Ctx, SkCrisRouterContext>>
+  >(
     (
       handlers,
       [resourceType, { listingLabel, detailLabel, domExtractor, linkedResourceFetcher, privacyMask }] // prettier-ignore
@@ -227,8 +222,8 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
         }
 
         const entry = { ...entryFromPage, ...linkedResources };
-        await pushData(entry, ctx, {
-          ...pushDataOptions,
+        await ctx.pushData(entry, ctx, {
+          includeMetadata: true,
           privacyMask: privacyMask as PrivacyMask<any>,
         });
       };

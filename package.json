@@ -1,6 +1,6 @@
 {
   "name": "apify-actor-skcris",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Apify Actor that scrapes SKCRIS.sk",
   "author": "Juro Oravec <juraj.oravec.josefson@gmail.com>",
@@ -68,10 +68,10 @@
   },
   "dependencies": {
     "@sentry/node": "^7.50.0",
-    "actor-spec": "^0.3.0",
+    "actor-spec": "^0.4.1",
     "apify": "^3.1.4",
     "apify-actor-config": "^1.0.2",
-    "apify-actor-utils": "^0.13.7",
+    "apify-actor-utils": "^0.14.1",
     "apify-client": "^2.7.1",
     "cheerio": "^1.0.0-rc.12",
     "crawlee": "^3.3.1",

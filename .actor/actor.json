@@ -155,18 +155,8 @@
         "nullable": true,
         "sectionCaption": "Privacy & Data governance (GDPR)"
       },
-      "outputDatasetIdOrName": {
-        "title": "Dataset ID or name",
-        "type": "string",
-        "description": "By default, data is written to Default dataset.\n    Set this option if you want to write data to non-default dataset.\n    <a href=\"https://docs.apify.com/sdk/python/docs/concepts/storages#opening-named-and-unnamed-storages\">Learn more</a><br/><br/>\n    <strong>NOTE:<strong> Dataset name can only contain letters 'a' through 'z', the digits '0' through '9', and the hyphen ('-') but only in the middle of the string (e.g. 'my-value-1')",
-        "editor": "textfield",
-        "example": "mIJVZsRQrDQf4rUAf",
-        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9-]*$",
-        "nullable": true,
-        "sectionCaption": "Output, Dataset & Integrations"
-      },
       "outputPickFields": {
-        "title": "Rename dataset fields",
+        "title": "Pick dataset fields",
         "type": "array",
         "description": "Select a subset of fields of an entry that will be pushed to the dataset.<br/><br/>\n    If not set, all fields on an entry will be pushed to the dataset.<br/><br/>\n    This is done before `outputRenameFields`.<br/><br/>\n    Keys can be nested, e.g. `\"someProp.value[0]\"`.\n    Nested path is resolved using <a href=\"https://lodash.com/docs/4.17.15#get\">Lodash.get()</a>.",
         "editor": "stringList",
@@ -174,7 +164,8 @@
           "fieldName",
           "another.nested[0].field"
         ],
-        "nullable": true
+        "nullable": true,
+        "sectionCaption": "Output Transformation & Filtering (T in ETL)"
       },
       "outputRenameFields": {
         "title": "Rename dataset fields",
@@ -186,13 +177,105 @@
         },
         "nullable": true
       },
+      "outputTransform": {
+        "title": "Transform entries",
+        "type": "string",
+        "description": "Freely transform the output data object using a custom function.<br/><br/>\n    If not set, the data will remain as is.<br/><br/>\n    This is done after `outputPickFields` and `outputRenameFields`.<br/><br/>\n    The function has access to Apify's Actor class, and actor's input and a shared state in the second argument.<br/><br/>\n    `async (entry, { Actor, input, state, itemCacheKey }) => { ... }`\n    ",
+        "editor": "javascript",
+        "example": "async (entry, { Actor, input, state, itemCacheKey }) => { ... }",
+        "nullable": true
+      },
+      "outputTransformBefore": {
+        "title": "Transform entries - Setup",
+        "type": "string",
+        "description": "Use this if you need to run one-time initialization code before `outputTransform`.<br/><br/>\n    The function has access to Apify's Actor class, and actor's input and a shared state in the first argument.<br/><br/>\n    `async ({ Actor, input, state, itemCacheKey }) => { ... }`\n    ",
+        "editor": "javascript",
+        "example": "async ({ Actor, input, state, itemCacheKey }) => { ... }",
+        "nullable": true
+      },
+      "outputTransformAfter": {
+        "title": "Transform entries - Teardown",
+        "type": "string",
+        "description": "Use this if you need to run one-time teardown code after `outputTransform`.<br/><br/>\n    The function has access to Apify's Actor class, and actor's input and a shared state in the first argument.<br/><br/>\n    `async ({ Actor, input, state, itemCacheKey }) => { ... }`\n    ",
+        "editor": "javascript",
+        "example": "async ({ Actor, input, state, itemCacheKey }) => { ... }",
+        "nullable": true
+      },
+      "outputFilter": {
+        "title": "Filter entries",
+        "type": "string",
+        "description": "Decide which scraped entries should be included in the output by using a custom function.<br/><br/>\n    If not set, all scraped entries will be included.<br/><br/>\n    This is done after `outputPickFields`, `outputRenameFields`, and `outputTransform`.<br/><br/>\n    The function has access to Apify's Actor class, and actor's input and a shared state in the second argument.<br/><br/>\n    `async (entry, { Actor, input, state, itemCacheKey }) => boolean`\n    ",
+        "editor": "javascript",
+        "example": "async (entry, { Actor, input, state, itemCacheKey }) => boolean",
+        "nullable": true
+      },
+      "outputFilterBefore": {
+        "title": "Filter entries - Setup",
+        "type": "string",
+        "description": "Use this if you need to run one-time initialization code before `outputFilter`.<br/><br/>\n    The function has access to Apify's Actor class, and actor's input and a shared state in the first argument.<br/><br/>\n    `async (entry, { Actor, input, state, itemCacheKey }) => boolean`\n    ",
+        "editor": "javascript",
+        "example": "async ({ Actor, input, state, itemCacheKey }) => boolean",
+        "nullable": true
+      },
+      "outputFilterAfter": {
+        "title": "Filter entries - Teardown",
+        "type": "string",
+        "description": "Use this if you need to run one-time teardown code after `outputFilter`.<br/><br/>\n    The function has access to Apify's Actor class, and actor's input and a shared state in the first argument.<br/><br/>\n    `async ({ Actor, input, state, itemCacheKey }) => boolean`\n    ",
+        "editor": "javascript",
+        "example": "async ({ Actor, input, state, itemCacheKey }) => boolean",
+        "nullable": true
+      },
+      "outputDatasetIdOrName": {
+        "title": "Dataset ID or name",
+        "type": "string",
+        "description": "By default, data is written to Default dataset.\n    Set this option if you want to write data to non-default dataset.\n    <a href=\"https://docs.apify.com/sdk/python/docs/concepts/storages#opening-named-and-unnamed-storages\">Learn more</a><br/><br/>\n    <strong>NOTE:<strong> Dataset name can only contain letters 'a' through 'z', the digits '0' through '9', and the hyphen ('-') but only in the middle of the string (e.g. 'my-value-1')",
+        "editor": "textfield",
+        "example": "mIJVZsRQrDQf4rUAf",
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9-]*$",
+        "nullable": true,
+        "sectionCaption": "Output Dataset & Caching (L in ETL)"
+      },
+      "outputCacheStoreIdOrName": {
+        "title": "Cache ID or name",
+        "type": "string",
+        "description": "Set this option if you want to cache scraped entries in <a href=\"https://docs.apify.com/sdk/js/docs/guides/result-storage#key-value-store\">Apify's Key-value store</a>.<br/><br/>\n    This is useful for example when you want to scrape only NEW entries. In such case, you can use the `outputFilter` option to define a custom function to filter out entries already found in the cache.\n    <a href=\"https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-key-value-stores\">Learn more</a><br/><br/>\n    <strong>NOTE:<strong> Cache name can only contain letters 'a' through 'z', the digits '0' through '9', and the hyphen ('-') but only in the middle of the string (e.g. 'my-value-1')",
+        "editor": "textfield",
+        "example": "mIJVZsRQrDQf4rUAf",
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9-]*$",
+        "nullable": true
+      },
+      "outputCachePrimaryKeys": {
+        "title": "Cache primary keys",
+        "type": "array",
+        "description": "Specify fields that uniquely identify entries (primary keys), so entries can be compared against the cache.<br/><br/>\n    <strong>NOTE:<strong> If not set, the entries are hashed based all fields",
+        "editor": "stringList",
+        "example": [
+          "name",
+          "city"
+        ],
+        "nullable": true
+      },
+      "outputCacheActionOnResult": {
+        "title": "Cache action on result",
+        "type": "string",
+        "description": "Specify whether scraped results should be added to, removed from, or overwrite the cache.<br/><br/>\n    - <strong>add<strong> - Adds scraped results to the cache<br/><br/>\n    - <strong>remove<strong> - Removes scraped results from the cache<br/><br/>\n    - <strong>set<strong> - First clears all entries from the cache, then adds scraped results to the cache<br/><br/>\n    <strong>NOTE:<strong> No action happens when this field is empty.",
+        "editor": "select",
+        "enum": [
+          "add",
+          "remove",
+          "overwrite"
+        ],
+        "example": "add",
+        "nullable": true
+      },
       "metamorphActorId": {
         "title": "Metamorph actor ID - metamorph to another actor at the end",
         "type": "string",
         "description": "Use this option if you want to run another actor with the same dataset after this actor has finished (AKA metamorph into another actor). <a href=\"https://docs.apify.com/sdk/python/docs/concepts/interacting-with-other-actors#actormetamorph\">Learn more</a> <br/><br/>New actor is identified by its ID, e.g. \"apify/web-scraper\".",
         "editor": "textfield",
         "example": "apify/web-scraper",
-        "nullable": true
+        "nullable": true,
+        "sectionCaption": "Integrations (Metamorphing)"
       },
       "metamorphActorBuild": {
         "title": "Metamorph actor build",
