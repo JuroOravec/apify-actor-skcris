@@ -6,7 +6,7 @@ import {
   DOMLib,
   PrivacyMask,
   ActorRouterContext,
-} from 'apify-actor-utils';
+} from 'crawlee-one';
 import type { Response as GotResponse } from 'got-scraping';
 import type { IncomingMessage } from 'http';
 
@@ -36,7 +36,7 @@ interface RouteData {
   listingLabel: RouteLabel;
   detailLabel: RouteLabel;
   path: string;
-  domExtractor: (input: { domLib: DOMLib<any>; log: Log }) => object;
+  domExtractor: (input: { domLib: DOMLib<any, any>; log: Log }) => object;
   linkedResourceFetcher: (
     context: Omit<SkCrisDetailPageContext, 'resourceType'> & { log: Log }
   ) => Promise<Record<string, unknown>>;
@@ -141,7 +141,7 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
     listingFilterRegion,
     listingFilterFirstLetter,
     entryIncludeLinkedResources,
-    listingFilterMaxCount,
+    requestMaxEntries,
     listingCountOnly,
     listingItemsPerPage,
   } = input;
@@ -184,10 +184,10 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
             ctx.log.debug(`Done scheduling ${reqs.length} entry URLs for scraping`);
 
             // Do not go to next page if we've reached the max count
-            if (listingFilterMaxCount != null) {
+            if (requestMaxEntries != null) {
               const entriesTotal = context.page * context.perPage;
-              if (entriesTotal >= listingFilterMaxCount) {
-                ctx.log.info(`Reached the max limit of entries (${listingFilterMaxCount}). Stopping listing scraping`); // prettier-ignore
+              if (entriesTotal >= requestMaxEntries) {
+                ctx.log.info(`Reached the max limit of entries (${requestMaxEntries}). Stopping listing scraping`); // prettier-ignore
                 abort();
               }
             }
@@ -198,8 +198,9 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
       // Configure detail handlers for all resource types
       handlers[detailLabel] = async (ctx) => {
         const url = ctx.request.loadedUrl || ctx.request.url;
-        const domLib = cheerioDOMLib(ctx.$, url);
-        const entryFromPage = domExtractor({ domLib, log: ctx.log });
+        const rootEl = ctx.$.root();
+        const domLib = cheerioDOMLib(rootEl, url);
+        const entryFromPage = await domExtractor({ domLib, log: ctx.log });
 
         // Use the session ID we were given in response to be within the correct context
         // while we fetch linked resources.
@@ -222,7 +223,7 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
         }
 
         const entry = { ...entryFromPage, ...linkedResources };
-        await ctx.pushData(entry, ctx, {
+        await ctx.actor.pushData(entry, ctx, {
           includeMetadata: true,
           privacyMask: privacyMask as PrivacyMask<any>,
         });

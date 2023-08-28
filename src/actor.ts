@@ -1,5 +1,5 @@
 import type { CheerioCrawlerOptions } from 'crawlee';
-import { createAndRunApifyActor } from 'apify-actor-utils';
+import { createAndRunCrawleeOne, CrawlerUrl } from 'crawlee-one';
 
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
@@ -81,7 +81,7 @@ const crawlerConfigDefaults: CheerioCrawlerOptions = {
 export const run = async (crawlerConfigOverrides?: CheerioCrawlerOptions): Promise<void> => {
   const pkgJson = getPackageJsonInfo(module, ['name']);
 
-  await createAndRunApifyActor({
+  await createAndRunCrawleeOne({
     actorType: 'cheerio',
     actorName: pkgJson.name,
     actorConfig: {
@@ -92,11 +92,11 @@ export const run = async (crawlerConfigOverrides?: CheerioCrawlerOptions): Promi
     crawlerConfigDefaults,
     crawlerConfigOverrides,
     onActorReady: async (actor) => {
-      const startUrls: string[] = [];
-      if (actor.input?.startUrls) startUrls.push(...actor.input?.startUrls);
+      const startUrls: CrawlerUrl[] = [];
+      if (actor.startUrls?.length) startUrls.push(...actor.startUrls);
       else if (actor.input?.datasetType) startUrls.push(datasetTypeToUrl[actor.input?.datasetType]);
 
-      await actor.runActor(startUrls);
+      await actor.runCrawler(actor.startUrls);
     },
   });
 };

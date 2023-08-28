@@ -1,6 +1,6 @@
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 import Joi from 'joi';
-import { runActorTest } from 'apify-actor-utils';
+import { runCrawlerTest } from 'crawlee-one';
 
 import {
   simpleSkCrisPrjItemValidation,
@@ -20,7 +20,7 @@ import type {
 import type { ActorInput } from '../../src/config';
 
 const log = (...args) => console.log(...args);
-const runActor = () => run({ useSessionPool: false, maxRequestRetries: 0 });
+const runCrawler = () => run({ useSessionPool: false, maxRequestRetries: 0 });
 
 const detailUrls: {
   type: ResourceType;
@@ -106,7 +106,7 @@ describe(
       it(`extracts simple entries from ${type} page`, () => {
         expect.assertions(1);
 
-        return runActorTest<any, ActorInput>({
+        return runCrawlerTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],
@@ -114,7 +114,7 @@ describe(
             includePersonalData: true,
             logLevel: 'debug',
           },
-          runActor,
+          runCrawler,
           onPushData: async (data, done) => {
             expect(data.length).toBeGreaterThan(0);
             data.forEach((d) => {
@@ -129,7 +129,7 @@ describe(
       it(`extracts detailed entries from ${type} page`, () => {
         expect.assertions(2);
 
-        return runActorTest<any, ActorInput>({
+        return runCrawlerTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],
@@ -137,7 +137,7 @@ describe(
             includePersonalData: true,
             logLevel: 'debug',
           },
-          runActor,
+          runCrawler,
           onPushData: async (data, done) => {
             expect(data.length).toBeGreaterThan(0);
             data.forEach((d) => {
@@ -164,14 +164,14 @@ describe(
           }, {})
         ).unknown(true);
 
-        return runActorTest<any, ActorInput>({
+        return runCrawlerTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],
             entryIncludeLinkedResources: true,
             logLevel: 'debug',
           },
-          runActor,
+          runCrawler,
           onPushData: async (data, done) => {
             expect(data.length).toBeGreaterThan(0);
             data.forEach((d) => {

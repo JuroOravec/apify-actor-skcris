@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import type { ActorEntryMetadata, WithActorEntryMetadata } from 'apify-actor-utils';
+import type { ApifyEntryMetadata } from 'crawlee-one';
 
 import type {
   DetailedSkCrisOrgItem,
@@ -40,7 +40,7 @@ export const joiUrlNotEmptyNullable = joiUrlNotEmpty.allow(null);
 ////////////////////////
 // Objects
 ////////////////////////
-export const metadataValidation = Joi.object<ActorEntryMetadata>({
+export const metadataValidation = Joi.object<ApifyEntryMetadata>({
   actorId: joiStrNotEmptyNullable,
   actorRunId: joiStrNotEmptyNullable,
   actorRunUrl: joiUrlNotEmptyNullable,
@@ -104,7 +104,7 @@ const linkedResourceDocumentValidation = Joi.object<SkCrisLinkedResourceDocument
 });
 
 const simpleSkCrisOrgItemValidationFields: Record<
-  keyof WithActorEntryMetadata<SimpleSkCrisOrgItem>,
+  keyof (SimpleSkCrisOrgItem & { metadata: ApifyEntryMetadata }),
   Joi.Schema
 > = {
   guid: joiStrNotEmpty,
@@ -133,11 +133,11 @@ const simpleSkCrisOrgItemValidationFields: Record<
 };
 
 export const simpleSkCrisOrgItemValidation = Joi.object<
-  WithActorEntryMetadata<SimpleSkCrisOrgItem>
+  SimpleSkCrisOrgItem & { metadata: ApifyEntryMetadata }
 >({ ...simpleSkCrisOrgItemValidationFields });
 
 export const detailedSkCrisOrgItemValidation = Joi.object<
-  WithActorEntryMetadata<DetailedSkCrisOrgItem>
+  DetailedSkCrisOrgItem & { metadata: ApifyEntryMetadata }
 >({
   ...simpleSkCrisOrgItemValidationFields,
   addresses: Joi.array().items(addressValidation),
@@ -167,7 +167,7 @@ export const detailedSkCrisOrgItemValidation = Joi.object<
 });
 
 const simpleSkCrisResItemValidationFields: Record<
-  keyof WithActorEntryMetadata<SimpleSkCrisResItem>,
+  keyof (SimpleSkCrisResItem & { metadata: ApifyEntryMetadata }),
   Joi.Schema
 > = {
   guid: joiStrNotEmpty,
@@ -184,11 +184,11 @@ const simpleSkCrisResItemValidationFields: Record<
 };
 
 export const simpleSkCrisResItemValidation = Joi.object<
-  WithActorEntryMetadata<SimpleSkCrisResItem>
+  SimpleSkCrisResItem & { metadata: ApifyEntryMetadata }
 >({ ...simpleSkCrisResItemValidationFields });
 
 export const detailedSkCrisResItemValidation = Joi.object<
-  WithActorEntryMetadata<DetailedSkCrisResItem>
+  DetailedSkCrisResItem & { metadata: ApifyEntryMetadata }
 >({
   ...simpleSkCrisResItemValidationFields,
   organisations: Joi.array().items(linkedResourceValidation),
@@ -208,7 +208,7 @@ export const detailedSkCrisResItemValidation = Joi.object<
 });
 
 const simpleSkCrisPrjItemValidationFields: Record<
-  keyof WithActorEntryMetadata<SimpleSkCrisPrjItem>,
+  keyof (SimpleSkCrisPrjItem & { metadata: ApifyEntryMetadata }),
   Joi.Schema
 > = {
   guid: joiStrNotEmpty,
@@ -232,11 +232,11 @@ const simpleSkCrisPrjItemValidationFields: Record<
 };
 
 export const simpleSkCrisPrjItemValidation = Joi.object<
-  WithActorEntryMetadata<SimpleSkCrisPrjItem>
+  SimpleSkCrisPrjItem & { metadata: ApifyEntryMetadata }
 >({ ...simpleSkCrisPrjItemValidationFields });
 
 export const detailedSkCrisPrjItemValidation = Joi.object<
-  WithActorEntryMetadata<DetailedSkCrisPrjItem>
+  DetailedSkCrisPrjItem & { metadata: ApifyEntryMetadata }
 >({
   ...simpleSkCrisPrjItemValidationFields,
   organisations: Joi.array().items(linkedResourceValidation),

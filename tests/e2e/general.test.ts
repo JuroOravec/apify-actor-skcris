@@ -1,6 +1,6 @@
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 import Joi from 'joi';
-import { runActorTest } from 'apify-actor-utils';
+import { runCrawlerTest } from 'crawlee-one';
 
 import { datasetTypeToUrl } from '../../src/constants';
 import type { DatasetType } from '../../src/types';
@@ -13,7 +13,7 @@ import {
 } from '../utils/assert';
 
 const log = (...args) => console.log(...args);
-const runActor = () => run({ useSessionPool: false, maxRequestRetries: 0 });
+const runCrawler = () => run({ useSessionPool: false, maxRequestRetries: 0 });
 
 const testCases: {
   datasetType: DatasetType;
@@ -61,17 +61,17 @@ describe(
         let calls = 0;
         const queueLengths = batchQueueLengths.slice();
 
-        return runActorTest<any, ActorInput>({
+        return runCrawlerTest<any, ActorInput>({
           vi,
           input: {
             datasetType: datasetType as DatasetType,
-            listingFilterMaxCount: 3,
+            requestMaxEntries: 3,
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 4,
             includePersonalData: true,
           },
-          runActor,
+          runCrawler,
           onBatchAddRequests: (reqs) => {
             const expectedLength = queueLengths.shift();
 

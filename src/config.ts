@@ -5,23 +5,11 @@ import {
   createBooleanField,
   createIntegerField,
   createStringField,
-  createArrayField,
   Field,
   ActorInputSchema,
   createActorOutputSchema,
 } from 'apify-actor-config';
-import {
-  CrawlerConfigActorInput,
-  LoggingActorInput,
-  OutputActorInput,
-  PrivacyActorInput,
-  ProxyActorInput,
-  crawlerInput,
-  loggingInput,
-  outputInput,
-  privacyInput,
-  proxyInput,
-} from 'apify-actor-utils';
+import { crawlerInput, allActorInputs, AllActorInputs } from 'crawlee-one';
 
 import { alphabet, regionFilterNames } from './constants';
 import { DATASET_TYPE, DatasetType, REGION_TYPE, RegionType } from './types';
@@ -34,8 +22,6 @@ const newLine = (repeats = 1) => '<br/>'.repeat(repeats);
 export interface CustomActorInput {
   /** Choose what kind of data you want to extract - Organisations, researchers, projects, ... */
   datasetType?: DatasetType;
-  /** URLs to start with */
-  startUrls?: string[];
   /**
    * If checked, then, when scraping entry details, the scraper will also fetch all relationships to linked resources (eg org's researchers, org's projects, ...).
    *
@@ -58,8 +44,6 @@ export interface CustomActorInput {
   listingFilterFirstLetter?: string;
   /** If set, only entries within this region will be extracted */
   listingFilterRegion?: RegionType;
-  /** If set, only up to this number of entries will be extracted */
-  listingFilterMaxCount?: number;
   /**
    * If set, this number of entries will be extracted per page.
    *
@@ -73,11 +57,7 @@ export interface CustomActorInput {
 /** Shape of the data passed to the actor from Apify */
 export interface ActorInput
   // Include the common fields in input
-  extends CrawlerConfigActorInput,
-    LoggingActorInput,
-    ProxyActorInput,
-    PrivacyActorInput,
-    OutputActorInput,
+  extends AllActorInputs,
     CustomActorInput {}
 
 const customActorInput: Record<keyof CustomActorInput, Field> = {
@@ -94,15 +74,6 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
     enum: DATASET_TYPE,
     enumTitles: DATASET_TYPE.map(capitalize),
     nullable: true,
-  }),
-  startUrls: createArrayField({
-    title: 'Start URLs',
-    type: 'array',
-    description: `Select specific URLs to scrape. This option takes precedence over
-        ${strong('Dataset type')}.${newLine(2)}
-        - If the URL is a listing page, all entries of that list are extracted.${newLine()}
-        - If the URL is a details page, only that page is extracted.`,
-    editor: 'requestListSources',
   }),
   entryIncludeLinkedResources: createBooleanField({
     title: 'Include linked resources',
@@ -140,17 +111,6 @@ const customActorInput: Record<keyof CustomActorInput, Field> = {
     example: 'bratislava',
     enum: REGION_TYPE,
     enumTitles: REGION_TYPE.map((reg) => regionFilterNames[reg]),
-    nullable: true,
-  }),
-  listingFilterMaxCount: createIntegerField({
-    title: 'Target number of results',
-    type: 'integer',
-    description: `If set, only up to this number of entries will be extracted.
-        The actual number of entries might be higher than this due to multiple
-        pages being scraped at the same time.`,
-    prefill: 50,
-    example: 50,
-    minimum: 1,
     nullable: true,
   }),
   listingItemsPerPage: createIntegerField({
@@ -193,11 +153,7 @@ const inputSchema = createActorInputSchema<ActorInputSchema<Record<keyof ActorIn
   properties: {
     ...customActorInput,
     // Include the common fields in input
-    ...proxyInput,
-    ...privacyInput,
-    ...outputInput,
-    ...crawlerInput,
-    ...loggingInput,
+    ...allActorInputs,
   },
 });
 

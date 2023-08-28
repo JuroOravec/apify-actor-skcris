@@ -1,29 +1,18 @@
 import Joi from 'joi';
-import {
-  crawlerInputValidationFields,
-  loggingInputValidationFields,
-  outputInputValidationFields,
-  privacyInputValidationFields,
-  proxyInputValidationFields,
-} from 'apify-actor-utils';
+import { allActorInputValidationFields } from 'crawlee-one';
 
 import { DATASET_TYPE, REGION_TYPE } from './types';
 import type { ActorInput } from './config';
 import { alphabet, datasetTypeToUrl } from './constants';
 
 const inputValidationSchema = Joi.object<ActorInput>({
-  ...crawlerInputValidationFields,
-  ...proxyInputValidationFields,
-  ...loggingInputValidationFields,
-  ...privacyInputValidationFields,
-  ...outputInputValidationFields,
+  ...allActorInputValidationFields,
 
   datasetType: Joi.string().valid(...DATASET_TYPE).optional(), // prettier-ignore
   startUrls: Joi.array().optional(),
   entryIncludeLinkedResources: Joi.boolean().optional(),
   listingFilterFirstLetter: Joi.string().valid(...alphabet.split('')).optional(), // prettier-ignore
   listingFilterRegion: Joi.string().valid(...REGION_TYPE).optional(), // prettier-ignore
-  listingFilterMaxCount: Joi.number().min(0).integer().optional(),
   listingItemsPerPage: Joi.number().min(0).integer().optional(),
   listingCountOnly: Joi.boolean().optional(),
 } satisfies Record<keyof ActorInput, Joi.Schema>);

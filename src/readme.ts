@@ -1,10 +1,10 @@
-import { ApifyReadmeTemplatesOverrides, renderReadme } from 'apify-actor-utils';
+import { CrawleeOneReadmeTemplatesOverrides, renderApifyReadme } from 'crawlee-one';
 
 import actorSpec from './actorspec';
 
 const templates = {
   input: {
-    maxCount: 'listingFilterMaxCount',
+    maxCount: 'requestMaxEntries',
     privacyName: 'Include personal data',
   },
 
@@ -34,7 +34,7 @@ const templates = {
       inputData: {
         datasetType: 'organisations',
         entryIncludeLinkedResources: false,
-        listingFilterMaxCount: 200,
+        requestMaxEntries: 200,
         listingItemsPerPage: 200,
       },
       inputDataComments: {
@@ -46,7 +46,7 @@ const templates = {
       inputData: {
         startUrls: ['https://www.skcris.sk/portal/web/guest/register-organizations'],
         entryIncludeLinkedResources: false,
-        listingFilterMaxCount: 200,
+        requestMaxEntries: 200,
         listingItemsPerPage: 200,
       },
       inputDataComments: {
@@ -142,15 +142,15 @@ Recommended settings:
 
     limitBeforeEnd: `Best practice:
 
-- Keep \`listingFilterMaxCount\` no higher than 500. Increasing \`listingFilterMaxCount\`
+- Keep \`requestMaxEntries\` no higher than 500. Increasing \`requestMaxEntries\`
 increases 1) the chance of the requests failing and 2) memory requirements.
 
-- Set \`listingFilterMaxCount\` to a multiple of \`listingItemsPerPage\`. Otherwise,
+- Set \`requestMaxEntries\` to a multiple of \`listingItemsPerPage\`. Otherwise,
   you will get more results than you wanted.
 
-    Example: If I want 800 results, I set \`listingFilterMaxCount\` to 800,
+    Example: If I want 800 results, I set \`requestMaxEntries\` to 800,
     and \`listingItemsPerPage\` to 400.`,
   },
-} satisfies ApifyReadmeTemplatesOverrides;
+} satisfies CrawleeOneReadmeTemplatesOverrides;
 
-renderReadme({ filepath: './.actor/README.md', actorSpec, templates });
+renderApifyReadme({ filepath: './.actor/README.md', actorSpec, templates });

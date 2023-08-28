@@ -1,6 +1,6 @@
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 import Joi from 'joi';
-import { runActorTest } from 'apify-actor-utils';
+import { runCrawlerTest } from 'crawlee-one';
 
 import {
   simpleSkCrisOrgItemValidation,
@@ -12,7 +12,7 @@ import { datasetTypeToUrl } from '../../src/constants';
 import type { ActorInput } from '../../src/config';
 
 const log = (...args) => console.log(...args);
-const runActor = () => run({ useSessionPool: false, maxRequestRetries: 0 });
+const runCrawler = () => run({ useSessionPool: false, maxRequestRetries: 0 });
 
 const testCases: {
   name: string;
@@ -54,17 +54,17 @@ describe(
         const queueLengths = batchQueueLengths.slice();
         let pushedDataCount = 0;
 
-        await runActorTest<any, ActorInput>({
+        await runCrawlerTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [url],
-            listingFilterMaxCount: 10,
+            requestMaxEntries: 10,
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 4,
             includePersonalData: true,
           },
-          runActor,
+          runCrawler,
           onBatchAddRequests: (reqs) => {
             const expectedLength = queueLengths.shift();
             expect(reqs).toHaveLength(expectedLength!);
@@ -89,18 +89,18 @@ describe(
       expect.assertions(numOfAssertCalls);
       const queueLengths = batchQueueLengths.slice();
 
-      return runActorTest<any, ActorInput>({
+      return runCrawlerTest<any, ActorInput>({
         vi,
         input: {
           startUrls: [datasetTypeToUrl.organisations],
-          listingFilterMaxCount: 10,
+          requestMaxEntries: 10,
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 4,
           includePersonalData: true,
           listingCountOnly: true,
         },
-        runActor,
+        runCrawler,
         onBatchAddRequests: (reqs) => {
           const expectedLength = queueLengths.shift();
           expect(reqs).toHaveLength(expectedLength!);
@@ -121,18 +121,18 @@ describe(
         const queueLengths = batchQueueLengths.slice();
         let pushedDataCount = 0;
 
-        await runActorTest<any, ActorInput>({
+        await runCrawlerTest<any, ActorInput>({
           vi,
           input: {
             startUrls: [datasetTypeToUrl.projects],
-            listingFilterMaxCount: 6,
+            requestMaxEntries: 6,
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 3,
             includePersonalData: true,
             ...input,
           },
-          runActor,
+          runCrawler,
           onBatchAddRequests: (reqs) => {
             const expectedLength = queueLengths.shift();
             expect(reqs).toHaveLength(expectedLength!);
@@ -159,11 +159,11 @@ describe(
       const queueLengths = batchQueueLengths.slice();
       let pushedDataCount = 0;
 
-      await runActorTest<any, ActorInput>({
+      await runCrawlerTest<any, ActorInput>({
         vi,
         input: {
           startUrls: [datasetTypeToUrl.projects],
-          listingFilterMaxCount: 6,
+          requestMaxEntries: 6,
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 3,
@@ -171,7 +171,7 @@ describe(
           listingFilterRegion: 'nitra',
           includePersonalData: true,
         },
-        runActor,
+        runCrawler,
         onBatchAddRequests: (reqs) => {
           const expectedLength = queueLengths.shift();
           expect(reqs).toHaveLength(expectedLength!);
@@ -197,11 +197,11 @@ describe(
       const queueLengths = batchQueueLengths.slice();
       let pushedDataCount = 0;
 
-      await runActorTest<any, ActorInput>({
+      await runCrawlerTest<any, ActorInput>({
         vi,
         input: {
           startUrls: [datasetTypeToUrl.projects],
-          listingFilterMaxCount: 6,
+          requestMaxEntries: 6,
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 3,
@@ -209,7 +209,7 @@ describe(
           listingFilterRegion: 'presov',
           includePersonalData: true,
         },
-        runActor,
+        runCrawler,
         onBatchAddRequests: (reqs) => {
           const expectedLength = queueLengths.shift();
           expect(reqs).toHaveLength(expectedLength!);

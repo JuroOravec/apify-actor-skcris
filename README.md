@@ -7,7 +7,7 @@ Apify actor scraper for skcris.sk
 For more info see:
 
 - <https://apify.com/jurooravec/skcris-scraper>
-- <https://github.com/JuroOravec/apify-actor-utils>
+- <https://github.com/JuroOravec/crawlee-one>
 - <https://docs.apify.com/platform/actors/development>
 
 ## Checklist
