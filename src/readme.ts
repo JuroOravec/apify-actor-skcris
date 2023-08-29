@@ -84,7 +84,9 @@ on research in Slovakia.
 The database contains contact info, outputs, services,
 and project participation of organisations and researchers registered in Slovakia.
 If an organisation or a researcher received public funding for their research, you can
-find them here.`,
+find them here.
+
+IMPORTANT: As of Aug 2023, you need to have a Slovak proxy!`,
 
     introAfterDatasets: `
 For each of the above, you can:

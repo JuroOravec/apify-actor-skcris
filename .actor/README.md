@@ -15,6 +15,8 @@ and project participation of organisations and researchers registered in Slovaki
 If an organisation or a researcher received public funding for their research, you can
 find them here.
 
+IMPORTANT: As of Aug 2023, you need to have a Slovak proxy!
+
 With SKCRIS Scraper, you can extract:
 
 - [All organisations in SKCRIS]( https://www.skcris.sk/portal/web/guest/register-organizations )
