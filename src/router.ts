@@ -141,7 +141,7 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
     listingFilterRegion,
     listingFilterFirstLetter,
     entryIncludeLinkedResources,
-    requestMaxEntries,
+    outputMaxEntries,
     listingCountOnly,
     listingItemsPerPage,
   } = input;
@@ -180,14 +180,14 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
             // Schedule the entry URLs for scraping
             const reqs = entries.map((url) => ({ url, label: detailLabel }));
             ctx.log.info(`Scheduling ${reqs.length} entry URLs for scraping`);
-            await ctx.crawler.addRequests(reqs);
+            await ctx.actor.pushRequests(reqs);
             ctx.log.debug(`Done scheduling ${reqs.length} entry URLs for scraping`);
 
             // Do not go to next page if we've reached the max count
-            if (requestMaxEntries != null) {
+            if (outputMaxEntries != null) {
               const entriesTotal = context.page * context.perPage;
-              if (entriesTotal >= requestMaxEntries) {
-                ctx.log.info(`Reached the max limit of entries (${requestMaxEntries}). Stopping listing scraping`); // prettier-ignore
+              if (entriesTotal >= outputMaxEntries) {
+                ctx.log.info(`Reached the max limit of entries (${outputMaxEntries}). Stopping listing scraping`); // prettier-ignore
                 abort();
               }
             }

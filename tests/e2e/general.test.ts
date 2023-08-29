@@ -65,7 +65,7 @@ describe(
           vi,
           input: {
             datasetType: datasetType as DatasetType,
-            requestMaxEntries: 3,
+            outputMaxEntries: 3,
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 4,

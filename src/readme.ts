@@ -4,7 +4,7 @@ import actorSpec from './actorspec';
 
 const templates = {
   input: {
-    maxCount: 'requestMaxEntries',
+    maxCount: 'outputMaxEntries',
     privacyName: 'Include personal data',
   },
 
@@ -34,7 +34,7 @@ const templates = {
       inputData: {
         datasetType: 'organisations',
         entryIncludeLinkedResources: false,
-        requestMaxEntries: 200,
+        outputMaxEntries: 200,
         listingItemsPerPage: 200,
       },
       inputDataComments: {
@@ -46,7 +46,7 @@ const templates = {
       inputData: {
         startUrls: ['https://www.skcris.sk/portal/web/guest/register-organizations'],
         entryIncludeLinkedResources: false,
-        requestMaxEntries: 200,
+        outputMaxEntries: 200,
         listingItemsPerPage: 200,
       },
       inputDataComments: {
@@ -140,16 +140,7 @@ Recommended settings:
 - **Memory (RAM)** - 512 MB (there's no point in going higher), or 256 MB if maxConcurrency is set to 3.
 - **Timeout** - No timeout.`,
 
-    limitBeforeEnd: `Best practice:
-
-- Keep \`requestMaxEntries\` no higher than 500. Increasing \`requestMaxEntries\`
-increases 1) the chance of the requests failing and 2) memory requirements.
-
-- Set \`requestMaxEntries\` to a multiple of \`listingItemsPerPage\`. Otherwise,
-  you will get more results than you wanted.
-
-    Example: If I want 800 results, I set \`requestMaxEntries\` to 800,
-    and \`listingItemsPerPage\` to 400.`,
+    limitBeforeEnd: ``,
   },
 } satisfies CrawleeOneReadmeTemplatesOverrides;
 

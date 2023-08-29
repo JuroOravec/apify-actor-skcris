@@ -58,7 +58,7 @@ describe(
           vi,
           input: {
             startUrls: [url],
-            requestMaxEntries: 10,
+            outputMaxEntries: 10,
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 4,
@@ -93,7 +93,7 @@ describe(
         vi,
         input: {
           startUrls: [datasetTypeToUrl.organisations],
-          requestMaxEntries: 10,
+          outputMaxEntries: 10,
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 4,
@@ -125,7 +125,7 @@ describe(
           vi,
           input: {
             startUrls: [datasetTypeToUrl.projects],
-            requestMaxEntries: 6,
+            outputMaxEntries: 6,
             entryIncludeLinkedResources: false,
             logLevel: 'debug',
             listingItemsPerPage: 3,
@@ -163,7 +163,7 @@ describe(
         vi,
         input: {
           startUrls: [datasetTypeToUrl.projects],
-          requestMaxEntries: 6,
+          outputMaxEntries: 6,
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 3,
@@ -201,7 +201,7 @@ describe(
         vi,
         input: {
           startUrls: [datasetTypeToUrl.projects],
-          requestMaxEntries: 6,
+          outputMaxEntries: 6,
           entryIncludeLinkedResources: false,
           logLevel: 'debug',
           listingItemsPerPage: 3,

@@ -93,10 +93,11 @@ export const run = async (crawlerConfigOverrides?: CheerioCrawlerOptions): Promi
     crawlerConfigOverrides,
     onActorReady: async (actor) => {
       const startUrls: CrawlerUrl[] = [];
-      if (actor.startUrls?.length) startUrls.push(...actor.startUrls);
-      else if (actor.input?.datasetType) startUrls.push(datasetTypeToUrl[actor.input?.datasetType]);
+      if (!actor.startUrls?.length && actor.input?.datasetType) {
+        startUrls.push(datasetTypeToUrl[actor.input?.datasetType]);
+      }
 
-      await actor.runCrawler(actor.startUrls);
+      await actor.runCrawler(startUrls);
     },
   });
 };
