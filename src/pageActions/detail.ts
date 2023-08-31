@@ -1,5 +1,5 @@
 import type { Log } from 'apify';
-import type { DOMLib } from 'crawlee-one';
+import type { Portadom } from 'portadom';
 import type { OptionsInit } from 'got-scraping';
 import { mapValues } from 'lodash';
 
@@ -21,7 +21,7 @@ import {
   makeSkCrisLinkedAddressRequest,
 } from '../api/skcris';
 import type { MaybePromise } from '../utils/types';
-import { awaitValues, serialAsyncFilter, serialAsyncMap } from '../utils/async';
+import { awaitValues } from '../utils/async';
 
 export interface SkCrisDetailPageContext<T extends ResourceType = ResourceType> {
   resourceType: T;
@@ -434,11 +434,11 @@ export const detailPageActions = {
 };
 
 export const detailDOMActions = {
-  extractOrgDetail: async <T extends DOMLib<any, any>>(input: { domLib: T; log: Log }) => {
-    const { domLib, log } = input;
-    const url = await domLib.url();
+  extractOrgDetail: async <T extends Portadom<any, any>>(input: { dom: T; log: Log }) => {
+    const { dom, log } = input;
+    const url = await dom.url();
     log.debug(`Extracting details from org page. URL ${url}`);
-    const tableData = await detailDOMActions.extractTableData({ domLib, log, resourceType: 'org' });
+    const tableData = await detailDOMActions.extractTableData({ dom, log, resourceType: 'org' });
 
     const certificateData = detailMethods.parseCertificate(tableData.certificateText);
     const fieldData = detailMethods.parseFields(tableData.activitySpec);
@@ -457,12 +457,12 @@ export const detailDOMActions = {
     } as SimpleSkCrisOrgItem;
   },
 
-  extractPrjDetail: async <T extends DOMLib<any, any>>(input: { domLib: T; log: Log }) => {
-    const { domLib, log } = input;
-    const url = await domLib.url();
+  extractPrjDetail: async <T extends Portadom<any, any>>(input: { dom: T; log: Log }) => {
+    const { dom, log } = input;
+    const url = await dom.url();
     log.debug(`Extracting details from prj page. URL ${url}`);
 
-    const tableData = await detailDOMActions.extractTableData({ domLib, log, resourceType: 'prj' });
+    const tableData = await detailDOMActions.extractTableData({ dom, log, resourceType: 'prj' });
     const fieldData = detailMethods.parseFields(tableData.activitySpec);
 
     // Project duration has form like so: "01.01.2018 - 31.12.2020"
@@ -483,11 +483,11 @@ export const detailDOMActions = {
     } as SimpleSkCrisPrjItem;
   },
 
-  extractResDetail: async <T extends DOMLib<any, any>>(input: { domLib: T; log: Log }) => {
-    const { domLib, log } = input;
-    const url = await domLib.url();
+  extractResDetail: async <T extends Portadom<any, any>>(input: { dom: T; log: Log }) => {
+    const { dom, log } = input;
+    const url = await dom.url();
     log.debug(`Extracting details from res page. URL ${url}`);
-    const tableData = await detailDOMActions.extractTableData({ domLib, log, resourceType: 'res' });
+    const tableData = await detailDOMActions.extractTableData({ dom, log, resourceType: 'res' });
 
     // https://www.skcris.sk/portal/register-researchers?...&guid=cfOrg_4328
     const guid = new URL(url!).searchParams.get('guid');
@@ -501,26 +501,26 @@ export const detailDOMActions = {
     } as SimpleSkCrisResItem;
   },
 
-  extractTableData: async <T extends DOMLib<any, any>>(input: {
-    domLib: T;
+  extractTableData: async <T extends Portadom<any, any>>(input: {
+    dom: T;
     log: Log;
     resourceType: ResourceType;
   }) => {
-    const { domLib, log, resourceType } = input;
-    const url = await domLib.url();
+    const { dom, log, resourceType } = input;
+    const url = await dom.url();
     log.debug(`Extracting tabular details from the page. URL ${url}`);
-    const rootEl = await domLib.root();
+    const rootEl = dom.root();
 
-    const allTableEls = await rootEl?.findMany('.detail > tr');
-    const tableDataEls = (await serialAsyncFilter(allTableEls ?? [], (el) => el.text())) // Remove empty tags
-      .slice(1, -1); // Remove first row (heading) and last row (related resources - we get this data in JSON)
+    const tableDataEls = await rootEl
+      .findMany('.detail > tr')
+      .filterAsyncSerial((el) => el.text()) // Remove empty tags
+      .slice(1, -1).promise; // Remove first row (heading) and last row (related resources - we get this data in JSON)
     log.debug(`Found ${tableDataEls.length} elements. URL ${url}`); // prettier-ignore
 
     const titleMap = mapFieldsByType[resourceType];
     const tableData = tableDataEls.reduce(async (promiseAgg, rowEl) => {
       const agg = await promiseAgg;
-      const children = await rowEl.children();
-      const [title, val] = await serialAsyncMap(children, async (el) => {
+      const [title, val] = await rowEl.children().mapAsyncSerial(async (el) => {
         const text = await el.text();
         return text?.replace(/\s+/g, ' ') ?? null;
       });

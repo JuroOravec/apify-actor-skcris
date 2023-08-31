@@ -1,12 +1,11 @@
 import type { CheerioCrawlingContext, CrawlingContext, Log } from 'crawlee';
 import {
   createCheerioRouteMatchers,
-  cheerioDOMLib,
   RouteHandler,
-  DOMLib,
   PrivacyMask,
   ActorRouterContext,
 } from 'crawlee-one';
+import { Portadom, cheerioPortadom } from 'portadom';
 import type { Response as GotResponse } from 'got-scraping';
 import type { IncomingMessage } from 'http';
 
@@ -36,7 +35,7 @@ interface RouteData {
   listingLabel: RouteLabel;
   detailLabel: RouteLabel;
   path: string;
-  domExtractor: (input: { domLib: DOMLib<any, any>; log: Log }) => object;
+  domExtractor: (input: { dom: Portadom<any, any>; log: Log }) => object;
   linkedResourceFetcher: (
     context: Omit<SkCrisDetailPageContext, 'resourceType'> & { log: Log }
   ) => Promise<Record<string, unknown>>;
@@ -199,8 +198,8 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
       handlers[detailLabel] = async (ctx) => {
         const url = ctx.request.loadedUrl || ctx.request.url;
         const rootEl = ctx.$.root();
-        const domLib = cheerioDOMLib(rootEl, url);
-        const entryFromPage = await domExtractor({ domLib, log: ctx.log });
+        const dom = cheerioPortadom(rootEl, url);
+        const entryFromPage = await domExtractor({ dom, log: ctx.log });
 
         // Use the session ID we were given in response to be within the correct context
         // while we fetch linked resources.
