@@ -1,4 +1,4 @@
-import { CrawleeOneReadmeTemplatesOverrides, renderApifyReadme } from 'crawlee-one';
+import { ApifyReadmeTemplatesOverrides, renderApifyReadme } from 'crawlee-one';
 
 import actorSpec from './actorspec';
 
@@ -144,6 +144,6 @@ Recommended settings:
 
     limitBeforeEnd: ``,
   },
-} satisfies CrawleeOneReadmeTemplatesOverrides;
+} satisfies ApifyReadmeTemplatesOverrides;
 
 renderApifyReadme({ filepath: './.actor/README.md', actorSpec, templates });

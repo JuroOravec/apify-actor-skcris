@@ -1,5 +1,5 @@
 import type { DatasetFeatures, DatasetModes } from 'actor-spec';
-import type { CrawleeOneScraperActorSpec } from 'crawlee-one';
+import type { ApifyScraperActorSpec } from 'crawlee-one';
 
 const filters = ['geographic region (kraj)', 'starting letter'];
 
@@ -465,6 +465,6 @@ const actorSpec = {
       },
     },
   ],
-} satisfies CrawleeOneScraperActorSpec;
+} satisfies ApifyScraperActorSpec;
 
 export default actorSpec;

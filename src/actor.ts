@@ -1,5 +1,5 @@
 import type { CheerioCrawlerOptions } from 'crawlee';
-import { createAndRunCrawleeOne, CrawlerUrl } from 'crawlee-one';
+import { CrawlerUrl, createSentryTelemetry, runCrawleeOne } from 'crawlee-one';
 
 import { createHandlers, routes } from './router';
 import { datasetTypeToUrl } from './constants';
@@ -81,10 +81,20 @@ const crawlerConfigDefaults: CheerioCrawlerOptions = {
 export const run = async (crawlerConfigOverrides?: CheerioCrawlerOptions): Promise<void> => {
   const pkgJson = getPackageJsonInfo(module, ['name']);
 
-  await createAndRunCrawleeOne({
+  const telemetry = createSentryTelemetry({
+    dsn: 'https://5b2e0562b4ec4ef6805a3fbbf4ff8acd@o470159.ingest.sentry.io/4505019830370304',
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+    serverName: pkgJson.name,
+  });
+
+  await runCrawleeOne({
     actorType: 'cheerio',
     actorName: pkgJson.name,
     actorConfig: {
+      telemetry,
       validateInput,
       routes,
       routeHandlers: ({ input }) => createHandlers(input!),

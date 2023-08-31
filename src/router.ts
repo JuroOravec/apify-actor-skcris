@@ -1,9 +1,9 @@
 import type { CheerioCrawlingContext, CrawlingContext, Log } from 'crawlee';
 import {
   createCheerioRouteMatchers,
-  RouteHandler,
+  CrawleeOneRouteHandler,
   PrivacyMask,
-  ActorRouterContext,
+  CrawleeOneActorRouterCtx,
 } from 'crawlee-one';
 import { Portadom, cheerioPortadom } from 'portadom';
 import type { Response as GotResponse } from 'got-scraping';
@@ -25,7 +25,7 @@ import { SkCrisDetailPageContext, detailDOMActions, detailPageActions } from './
 import { regionFilterNames } from './constants';
 import type { ActorInput } from './config';
 
-type SkCrisRouterContext = ActorRouterContext<
+type SkCrisRouterContext = CrawleeOneActorRouterCtx<
   CheerioCrawlingContext<any, any>,
   RouteLabel,
   ActorInput
@@ -146,7 +146,7 @@ export const createHandlers = <Ctx extends CheerioCrawlingContext>(input: ActorI
   } = input;
 
   return Object.entries(routeDataByType).reduce<
-    Record<RouteLabel, RouteHandler<Ctx, SkCrisRouterContext>>
+    Record<RouteLabel, CrawleeOneRouteHandler<Ctx, SkCrisRouterContext>>
   >(
     (
       handlers,
