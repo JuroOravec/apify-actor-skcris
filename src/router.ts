@@ -118,7 +118,7 @@ const createFetchFn = (ctx: CrawlingContext, cookie: CookieRef) => {
 
 export const routes = Object.values(routeDataByType)
   .map(({ listingLabel, detailLabel, path }) =>
-    createCheerioRouteMatchers<CheerioCrawlingContext, SkCrisRouterContext, RouteLabel>([
+    createCheerioRouteMatchers<RouteLabel, SkCrisRouterContext>([
       {
         name: detailLabel,
         handlerLabel: detailLabel,
