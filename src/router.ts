@@ -1,6 +1,6 @@
 import type { CheerioCrawlingContext, CrawlingContext, Log } from 'crawlee';
 import {
-  createCheerioRouteMatchers,
+  createCheerioRoutes,
   CrawleeOneRouteHandler,
   PrivacyMask,
   CrawleeOneActorRouterCtx,
@@ -118,7 +118,7 @@ const createFetchFn = (ctx: CrawlingContext, cookie: CookieRef) => {
 
 export const routes = Object.values(routeDataByType)
   .map(({ listingLabel, detailLabel, path }) =>
-    createCheerioRouteMatchers<RouteLabel, SkCrisRouterContext>([
+    createCheerioRoutes<RouteLabel, SkCrisRouterContext>([
       {
         name: detailLabel,
         handlerLabel: detailLabel,
