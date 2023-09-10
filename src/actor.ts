@@ -1,10 +1,12 @@
 import type { CheerioCrawlerOptions } from 'crawlee';
-import { CrawlerUrl, createSentryTelemetry, runCrawleeOne } from 'crawlee-one';
+import { CrawlerUrl, createSentryTelemetry } from 'crawlee-one';
 
-import { createHandlers, routes } from './router';
+import { skcrisCrawler } from './__generated__/crawler';
 import { datasetTypeToUrl } from './constants';
 import { validateInput } from './validation';
 import { getPackageJsonInfo } from './utils/package';
+import type { ActorInput } from './config';
+import { routes } from './routes';
 
 /**
  * # SKCRIS Basic Info
@@ -90,24 +92,23 @@ export const run = async (crawlerConfigOverrides?: CheerioCrawlerOptions): Promi
     serverName: pkgJson.name,
   });
 
-  await runCrawleeOne({
-    actorType: 'cheerio',
-    actorName: pkgJson.name,
-    actorConfig: {
-      telemetry,
-      validateInput,
-      routes,
-      routeHandlers: ({ input }) => createHandlers(input!),
-    },
+  await skcrisCrawler<ActorInput>({
+    telemetry,
+    crawlerConfig: crawlerConfigOverrides,
     crawlerConfigDefaults,
-    crawlerConfigOverrides,
-    onActorReady: async (actor) => {
-      const startUrls: CrawlerUrl[] = [];
-      if (!actor.startUrls?.length && actor.input?.datasetType) {
-        startUrls.push(datasetTypeToUrl[actor.input?.datasetType]);
-      }
-
-      await actor.runCrawler(startUrls);
+    hooks: {
+      validateInput,
+      onBeforeHandler: async (ctx) => {
+        ctx;
+      },
+      onReady: async (actor) => {
+        const startUrls: CrawlerUrl[] = [];
+        if (!actor.startUrls?.length && actor.input?.datasetType) {
+          startUrls.push(datasetTypeToUrl[actor.input?.datasetType]);
+        }
+        await actor.runCrawler(startUrls);
+      },
     },
+    routes,
   });
 };

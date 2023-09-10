@@ -397,7 +397,7 @@ export const detailPageActions = {
   fetchLinkedResourcesForResourceType: async <T extends ResourceType>(
     resourceType: T,
     linkedResourceIds: readonly LinkedResourceId<T>[],
-    context: Omit<SkCrisDetailPageContext, 'resourceType'> & { log: Log }
+    context: Omit<SkCrisDetailPageContext, 'resourceType'>
   ) => {
     const cookieVal = context.cookie.get();
     context.log.info(`Fetching linked resources for "${resourceType}" page. SESSION_ID ${cookieVal}`); // prettier-ignore

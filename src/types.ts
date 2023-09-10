@@ -1,14 +1,11 @@
 import { fromPairs } from 'lodash';
 
 import type { ArrVal } from './utils/types';
+import { skcrisRouteHandler } from './__generated__/crawler';
 
 const enumFromArray = <T extends readonly any[]>(arr: T) => {
   return fromPairs(arr.map((k) => [k, k])) as { [Key in ArrVal<T>]: Key };
 };
-
-export const ROUTE_LABELS = ['ORG_LISTING', 'ORG_DETAIL', 'PRJ_LISTING', 'PRJ_DETAIL', 'RES_LISTING', 'RES_DETAIL'] as const; // prettier-ignore
-export const ROUTE_LABEL_ENUM = enumFromArray(ROUTE_LABELS);
-export type RouteLabel = ArrVal<typeof ROUTE_LABELS>;
 
 export const RESOURCE_TYPE = ['org', 'res', 'prj'] as const; // prettier-ignore
 export const RESOURCE_TYPE_ENUM = enumFromArray(RESOURCE_TYPE);
@@ -28,6 +25,8 @@ export type DatasetType = ArrVal<typeof DATASET_TYPE>;
 
 export const REGION_TYPE = ['bratislava', 'trnava', 'trencin', 'nitra', 'zilina', 'banskabystrica', 'presov', 'kosice', 'zahranicie'] as const; // prettier-ignore
 export type RegionType = ArrVal<typeof REGION_TYPE>;
+
+export type HandlerContext = Parameters<skcrisRouteHandler>[0];
 
 interface BaseSkCrisItem {
   /** Eg `"cfOrg_7343"` */

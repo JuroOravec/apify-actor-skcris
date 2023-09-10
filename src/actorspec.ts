@@ -1,5 +1,6 @@
 import type { DatasetFeatures, DatasetModes } from 'actor-spec';
-import type { ApifyScraperActorSpec } from 'crawlee-one';
+
+import type { ApifyScraperActorSpec } from './utils/readme/apify/types';
 
 const filters = ['geographic region (kraj)', 'starting letter'];
 
